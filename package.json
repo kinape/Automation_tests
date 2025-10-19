@@ -1,0 +1,38 @@
+{
+  "name": "automation_tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress run",
+    "report": "node generate-report.js",
+    "cy:run": "npm run test && npm run report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kinape/Automation_tests.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kinape/Automation_tests/issues"
+  },
+  "homepage": "https://github.com/kinape/Automation_tests#readme",
+  "cypress-cucumber-preprocessor": {
+    "stepDefinitions": "cypress/e2e/cucumber/stepDefinitions/*.js",
+    "json": {
+      "enabled": true,
+      "output": "cypress/reports/cucumber-report.json"
+    }
+  },
+  "devDependencies": {
+    "cypress": "^15.4.0",
+    "multiple-cucumber-html-reporter": "^3.9.3"
+  },
+  "dependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^23.2.1",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.6",
+    "cypress-cucumber-preprocessor": "^4.3.1"
+  }
+}

@@ -1,4 +1,4 @@
-# Analista QA Senior
+# Analista QA Senior - Rogerio Melo Kinape
 
 ## Descrição
 
@@ -8,9 +8,13 @@ Este projeto contém uma suíte de testes de API automatizados desenvolvida com 
 
 O projeto segue uma estrutura organizada para facilitar a manutenção e escalabilidade dos testes:
 
-- **`cypress/e2e/cucumber/`**: Contém os arquivos de especificação e implementação dos testes. A configuração atual do projeto espera que para cada arquivo `.feature` haja um arquivo `.js` correspondente com o mesmo nome nesta pasta.
-  - `task1.feature` / `task1.js`: Suíte de testes com os cenários de "caminho feliz" para as operações de CRUD.
-  - `task2_validacoes_avancadas.feature` / `task2_validacoes_avancadas.js`: Suíte de testes com cenários negativos e validações detalhadas de headers e payloads.
+- **`cypress/e2e/cucumber/`**: Contém os arquivos de especificação `.feature`.
+  - `task1.feature`: Suíte de testes com os cenários da tarefa 1 - Validar endpoints de uma API
+  - `task2.feature`: Suíte de testes com cenários da tarefa 2 - Automatizar testes para múltiplos endpoints da API
+- **`cypress/e2e/cucumber/stepDefinitions/`**: Contém os arquivos de implementação dos steps dos cenários `.feature`.
+  - `common.js`: Steps comuns a vários cenários.
+  - `task1.js`: Steps específicos para a `task1.feature`.
+  - `task2.js`: Steps específicos para a `task2.feature`.
 - **`cypress/support/api/`**: Contém a classe `reqres.js`, que abstrai os detalhes das chamadas à API `reqres.in`. Esta camada atua como um "Service Object", tornando os testes mais limpos e fáceis de manter.
 - **`cypress/reports/`**: Diretório onde os relatórios de teste (JSON e HTML) são gerados.
 - **`generate-report.js`**: Script Node.js para gerar o relatório HTML a partir do resultado dos testes em JSON.
@@ -59,4 +63,12 @@ Após a execução dos testes, este comando lê o arquivo JSON e gera um relató
 
 ```bash
 npm run report
+```
+
+### 3. Executar Testes e Gerar Relatório (Comando Único)
+
+Este comando executa os testes e, em seguida, gera o relatório HTML.
+
+```bash
+npm run cy:run
 ```
