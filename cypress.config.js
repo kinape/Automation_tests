@@ -1,4 +1,12 @@
 const { defineConfig } = require("cypress");
+
+try {
+  const { webcrypto } = require("crypto");
+  if (!globalThis.crypto) {
+    globalThis.crypto = webcrypto;
+  }
+} catch (_) {
+}
 const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
 const { addCucumberPreprocessorPlugin } = require("@badeball/cypress-cucumber-preprocessor");
 const { createEsbuildPlugin } = require("@badeball/cypress-cucumber-preprocessor/esbuild");
