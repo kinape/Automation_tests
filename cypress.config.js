@@ -2,6 +2,7 @@ const { defineConfig } = require("cypress");
 const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
 const { addCucumberPreprocessorPlugin } = require("@badeball/cypress-cucumber-preprocessor");
 const { createEsbuildPlugin } = require("@badeball/cypress-cucumber-preprocessor/esbuild");
+const { nodeModulesPolyfillPlugin } = require("esbuild-plugins-node-modules-polyfill");
 
 module.exports = defineConfig({
   e2e: {
@@ -11,7 +12,7 @@ module.exports = defineConfig({
       on(
         "file:preprocessor",
         createBundler({
-          plugins: [createEsbuildPlugin(config)],
+          plugins: [nodeModulesPolyfillPlugin(), createEsbuildPlugin(config)],
         })
       );
 

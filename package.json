@@ -22,6 +22,7 @@
   "devDependencies": {
     "@faker-js/faker": "^10.1.0",
     "cypress": "^15.5.0",
+    "esbuild-plugins-node-modules-polyfill": "^1.7.1",
     "multiple-cucumber-html-reporter": "^3.9.3"
   },
   "dependencies": {
