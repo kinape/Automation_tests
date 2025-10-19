@@ -5,12 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "cypress run",
+    "cy:run": "cypress run --e2e --browser chrome --spec cypress/e2e/cucumber/task1.feature --config video=false --env allure=true",
     "report": "node generate-report.js",
-    "cy:run": "npm run test && npm run report"
+    "k6:run": "k6 run k6/load-test.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kinape/Automation_tests.git"
+  "cypress-cucumber-preprocessor": {
+    "json": {
+      "enabled": true,
+      "output": "cypress/reports/cucumber-report.json"
+    }
   },
   "keywords": [],
   "author": "",
@@ -28,6 +31,7 @@
   "dependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^23.2.1",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.6",
+    "choco": "^0.2.1",
     "crypto-browserify": "^3.12.1"
   },
   "overrides": {
