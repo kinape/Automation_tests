@@ -19,3 +19,5 @@ Thumbs.db
 # It is recommended to commit this file to version control.
 # If you want to ignore it, uncomment the following line:
 # package-lock.json
+Automation_tests.code-workspace 
+mobile/app/ApiDemos-debug.apk 

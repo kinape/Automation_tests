@@ -7,7 +7,12 @@
     "test": "cypress run",
     "report": "node generate-report.js",
     "cy:run": "npm run test && npm run report",
-    "k6:run": "k6 run k6/load-test.js"
+    "k6:run": "k6 run k6/load-test.js",
+    "test:mobile": "set \"NODE_OPTIONS=\" && wdio run ./mobile/config/wdio.conf.js --autoCompileOpts.autoCompile=false",
+    "test:mobile:win": "set \"NODE_OPTIONS=\" && if not defined ANDROID_HOME set \"ANDROID_HOME=%LOCALAPPDATA%\\Android\\Sdk\" && if not defined ANDROID_SDK_ROOT set \"ANDROID_SDK_ROOT=%ANDROID_HOME%\" && set \"PATH=%PATH%;%ANDROID_HOME%\\platform-tools;%ANDROID_HOME%\\emulator;%ANDROID_HOME%\\tools;%ANDROID_HOME%\\tools\\bin\" && wdio run ./mobile/config/wdio.conf.js --autoCompileOpts.autoCompile=false",
+    "android:emu:start": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\mobile\\scripts\\start-avd.ps1 -AvdName Pixel_6_API_34",
+    "android:emu:start:headless": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\mobile\\scripts\\start-avd.ps1 -AvdName Pixel_6_API_34 -GpuMode swiftshader_indirect -NoWindow",
+    "test:mobile:with-avd": "npm run android:emu:start:headless && set \"AVD_NAME=Pixel_6_API_34\" && npm run test:mobile:win"
   },
   "repository": {
     "type": "git",
@@ -22,9 +27,18 @@
   "homepage": "https://github.com/kinape/Automation_tests#readme",
   "devDependencies": {
     "@faker-js/faker": "^10.1.0",
+    "@wdio/cli": "^8.38.2",
+    "@wdio/local-runner": "^8.38.2",
+    "@wdio/mocha-framework": "^8.38.0",
+    "@wdio/spec-reporter": "^8.38.2",
+    "@wdio/appium-service": "^8.38.2",
+    "appium": "^2.10.3",
+    "appium-uiautomator2-driver": "^3.5.3",
+    "appium-xcuitest-driver": "^7.14.0",
     "cypress": "^15.5.0",
     "esbuild-plugins-node-modules-polyfill": "^1.7.1",
-    "multiple-cucumber-html-reporter": "^3.9.3"
+    "multiple-cucumber-html-reporter": "^3.9.3",
+    "webdriverio": "^8.38.2"
   },
   "dependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^23.2.1",
