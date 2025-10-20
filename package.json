@@ -5,15 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "cypress run",
-    "cy:run": "cypress run --e2e --browser chrome --spec cypress/e2e/cucumber/task1.feature --config video=false --env allure=true",
     "report": "node generate-report.js",
+    "cy:run": "npm run test && npm run report",
     "k6:run": "k6 run k6/load-test.js"
   },
-  "cypress-cucumber-preprocessor": {
-    "json": {
-      "enabled": true,
-      "output": "cypress/reports/cucumber-report.json"
-    }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kinape/Automation_tests.git"
   },
   "keywords": [],
   "author": "",
