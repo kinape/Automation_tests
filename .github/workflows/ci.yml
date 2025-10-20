@@ -79,7 +79,7 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
-          arch: x86_64
+          arch: aarch64
           profile: Nexus 6
           appium: true # Inicia o Appium automaticamente
           script: npm run test:mobile
