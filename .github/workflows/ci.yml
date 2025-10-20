@@ -42,7 +42,7 @@ jobs:
           filename: k6/load-test.js
 
   appium-mobile-test:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -56,7 +56,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '11'
+          java-version: '17'
 
       - name: Cache Gradle and Android SDK
         uses: actions/cache@v4
