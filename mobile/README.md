@@ -11,7 +11,7 @@ Este diretório contém a suíte E2E mobile usando WebdriverIO 8 com Appium (And
 - `mobile/app`: APK sob teste (ex.: `ApiDemos-debug.apk`).
 - `mobile/scripts`: utilitários PowerShell para AVD (`start-avd.ps1`) e setup.
 
-## Pré‑requisitos
+## Pré-requisitos
 
 - Node.js 20+ e Java 17 (JDK Temurin recomendado).
 - Android SDK configurado e acessível via `ANDROID_HOME`/`ANDROID_SDK_ROOT`.
@@ -73,5 +73,5 @@ $env:APP_PATH="C:\\apps\\MeuApp.apk"; $env:AVD_NAME="Pixel_6_API_34"; npm run te
 ## Notas de Execução
 
 - O `wdio.conf.js` valida se o SDK e `adb` estão acessíveis antes de iniciar.
-- O APK é checado quanto a assinatura ZIP válida para evitar "Invalid file" no Appium.
+- O APK é checado quanto à assinatura ZIP válida para evitar "Invalid file" no Appium.
 - Em CI (GitHub Actions) o emulador é gerenciado por `reactivecircus/android-emulator-runner` e o Appium é iniciado pelo serviço do WDIO.

@@ -1,4 +1,3 @@
-
 # Projeto de Automação de Testes com Cypress e Cucumber
 [![Autor: Rogerio Melo Kinape](https://img.shields.io/badge/autor-Rogerio%20Melo%20Kinape-blue)](#autor)
 
@@ -17,7 +16,7 @@ O projeto está estruturado da seguinte forma:
 ## Funcionalidades Testadas
 
 - **API**: Os arquivos `task1.feature` e `task2.feature` contêm os testes para os endpoints da API.
-- **Aplicação Web**: O arquivo `task3.feature` e `task4.feature` contêm os testes para a funcionalidade de cadastro, login da aplicação web e checkout simples em um e-commerce de exemplo.
+- **Aplicação Web**: Os arquivos `task3.feature` e `task4.feature` contêm os testes para cadastro, login e checkout simples em um e-commerce de exemplo.
 
 ## Bibliotecas Utilizadas
 

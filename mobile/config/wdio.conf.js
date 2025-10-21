@@ -37,7 +37,7 @@ exports.config = {
     bail: 0,
     baseUrl: 'http://localhost',
     waitforTimeout: 10000,
-    // Aumenta o timeout de criação de sessão/requests WebDriver para acomodar instalações/lançamentos mais lentos em CI
+    // Aumenta o timeout de criação de sessão/requests WebDriver para acomodar instalações/lançamentos mais lentos em CI
     connectionRetryTimeout: 600000,
     connectionRetryCount: 3,
     services: ['appium'],
@@ -72,8 +72,8 @@ exports.config = {
 
         if (!sdkRoot || !fs.existsSync(sdkRoot)) {
             throw new Error(
-                `Android SDK nǜo encontrado. Verifique as variǭveis ANDROID_SDK_ROOT/ANDROID_HOME. ` +
-                `Caminho atual resolvido: '${sdkRoot || '(nǜo definido)'}'. ` +
+                `Android SDK não encontrado. Verifique as variáveis ANDROID_SDK_ROOT/ANDROID_HOME. ` +
+                `Caminho atual resolvido: '${sdkRoot || '(não definido)'}'. ` +
                 `Abra o Android Studio e copie o caminho do SDK ou execute npx appium-doctor --android.`
             );
         }
@@ -93,7 +93,7 @@ exports.config = {
 
         if (!adbInPath && !adbExists) {
             throw new Error(
-                `adb nǜo encontrado. Adicione '${path.join(sdkRoot, 'platform-tools')}' ao PATH ` +
+                `adb não encontrado. Adicione '${path.join(sdkRoot, 'platform-tools')}' ao PATH ` +
                 `ou instale o pacote 'platform-tools' via SDK Manager. ` +
                 `SDK: '${sdkRoot}'.`
             );
@@ -145,13 +145,13 @@ exports.config = {
                     const list = emu.stdout.split(/\r?\n/).filter(Boolean);
                     if (!list.includes(avdName)) {
                         throw new Error(
-                            `AVD '${avdName}' nǜo encontrado. Dispon��veis: ${list.join(', ') || '(nenhum)'}.
-Defina AVD_NAME para um AVD vǭlido ou conecte um device f��sico (UDID).`
+                            `AVD '${avdName}' não encontrado. Disponíveis: ${list.join(', ') || '(nenhum)'}.
+Defina AVD_NAME para um AVD válido ou conecte um device físico (UDID).`
                         );
                     }
                 }
             } catch (e) {
-                // Se o comando falhar, aviso;s
+                // Se o comando falhar, aviso
                 if (e && e.message) throw e;
             }
         }

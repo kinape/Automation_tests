@@ -7,7 +7,7 @@ Este diretório contém o script de teste de carga usando k6 para validar desemp
 
 - `k6/load-test.js`: script principal com cenários de carga (stages), verificações (`check`) e limites de desempenho (`thresholds`).
 
-## Pré‑requisitos
+## Pré-requisitos
 
 - k6 instalado na máquina local.
   - Guia de instalação: https://grafana.com/docs/k6/latest/set-up/
@@ -67,6 +67,6 @@ Já há um job configurado em `/.github/workflows/ci.yml` usando `grafana/k6-act
 ## Análise dos Resultados (guia rápido)
 
 - Taxa de sucesso próxima a 100% indica boa resiliência sob carga. Se cair, inspecione `http_req_failed` e erros de backend.
-- Latência `p(95)` é mais representativa de experiência: mantenha-a abaixo do seu SLO (ex.: 500 ms). Se acima, investigue gargalos.
-- Verifique `checks` (passes/fails) para validar resposta funcional (ex.: `status === 200`). Fails apontam problemas de corretude.
+- Latência `p(95)` é mais representativa da experiência: mantenha-a abaixo do seu SLO (ex.: 500 ms). Se acima, investigue gargalos.
+- Verifique `checks` (passes/fails) para validar resposta funcional (ex.: `status === 200`). Falhas apontam problemas de corretude.
 - Compare estágios (rampa, sustentação, descida) para identificar degradação com aumento de VUs.
