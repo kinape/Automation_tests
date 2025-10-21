@@ -77,17 +77,19 @@ jobs:
       - name: Run Android emulator and tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          # Use Intel-compatible system image on macOS 13 runners
+          # Imagem compatível com Intel no macOS 13
           api-level: 34
           arch: x86_64
           target: google_apis
           profile: pixel_6
           emulator-options: -no-window -no-snapshot -noaudio -no-boot-anim -gpu swiftshader_indirect -no-metrics
+          emulator-boot-timeout: 600
+          disable-animations: true
           pre-emulator-launch-script: |
             echo "Resetting adb server using action SDK"
             which adb || true
             adb kill-server || true
             adb start-server
             adb version
-          appium: true # Inicia o Appium automaticamente
+          appium: false
           script: npm run test:mobile

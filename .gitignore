@@ -1,4 +1,4 @@
-# Dependencies
+# Dependências
 /node_modules
 
 # Cypress
@@ -11,13 +11,9 @@
 npm-debug.log
 *.log
 
-# Operating System files
+# Arquivos do Sistema Operacional
 .DS_Store
 Thumbs.db
 
-# The package-lock.json file ensures that you have a consistent set of dependencies.
-# It is recommended to commit this file to version control.
-# If you want to ignore it, uncomment the following line:
-# package-lock.json
 Automation_tests.code-workspace 
 mobile/app/ApiDemos-debug.apk 

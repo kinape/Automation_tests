@@ -88,3 +88,7 @@ Para executar os testes móveis, siga os passos abaixo:
    ```bash
    npm run test:mobile:with-avd
    ```
+
+## Autor
+
+Rogerio Melo Kinape

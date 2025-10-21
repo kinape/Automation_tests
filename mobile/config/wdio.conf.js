@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const cp = require('child_process');
 
-// Variáveis de ambiente para customização sem alterar o código
+// Variáveis de ambiente
 const avdName = process.env.AVD_NAME || process.env.ANDROID_AVD;
 const udid = process.env.UDID;
 const deviceNameEnv = process.env.DEVICE_NAME;
@@ -20,12 +20,13 @@ exports.config = {
         'appium:platformName': 'Android',
         'appium:automationName': 'UiAutomator2',
         'appium:deviceName': deviceNameEnv || 'Android Emulator',
-        // Caminho do .apk pode ser sobrescrito por APP_PATH (absoluto ou relativo)
         'appium:app': appPathEnv ? path.resolve(appPathEnv) : path.join(__dirname, '..', 'app', 'ApiDemos-debug.apk'),
         'appium:autoGrantPermissions': true,
         // Timeouts e ajustes para estabilizar o boot e comandos ADB
         'appium:adbExecTimeout': 120000,
         'appium:avdLaunchTimeout': 180000,
+        'appium:uiautomator2ServerInstallTimeout': 180000,
+        'appium:uiautomator2ServerLaunchTimeout': 180000,
         'appium:newCommandTimeout': 120,
         'appium:appWaitActivity': '*',
     }],
@@ -50,8 +51,8 @@ exports.config = {
 
         if (!sdkRoot || !fs.existsSync(sdkRoot)) {
             throw new Error(
-                `Android SDK não encontrado. Verifique as variáveis ANDROID_SDK_ROOT/ANDROID_HOME. ` +
-                `Caminho atual resolvido: '${sdkRoot || '(não definido)'}'. ` +
+                `Android SDK nǜo encontrado. Verifique as variǭveis ANDROID_SDK_ROOT/ANDROID_HOME. ` +
+                `Caminho atual resolvido: '${sdkRoot || '(nǜo definido)'}'. ` +
                 `Abra o Android Studio e copie o caminho do SDK ou execute npx appium-doctor --android.`
             );
         }
@@ -71,13 +72,12 @@ exports.config = {
 
         if (!adbInPath && !adbExists) {
             throw new Error(
-                `adb não encontrado. Adicione '${path.join(sdkRoot, 'platform-tools')}' ao PATH ` +
+                `adb nǜo encontrado. Adicione '${path.join(sdkRoot, 'platform-tools')}' ao PATH ` +
                 `ou instale o pacote 'platform-tools' via SDK Manager. ` +
                 `SDK: '${sdkRoot}'.`
             );
         }
 
-        // Validate APK early to avoid server-side "Invalid file"
         try {
             const appCandidate = exports.config.capabilities[0]['appium:app'];
             if (!appCandidate) {
@@ -117,32 +117,33 @@ exports.config = {
         }
 
         if (avdName) {
-            // Valida AVD se possível
+            // Valida AVD
             try {
                 const emu = cp.spawnSync('emulator', ['-list-avds'], { shell: true, encoding: 'utf8' });
                 if (emu.status === 0 && emu.stdout) {
                     const list = emu.stdout.split(/\r?\n/).filter(Boolean);
                     if (!list.includes(avdName)) {
                         throw new Error(
-                            `AVD '${avdName}' não encontrado. Disponíveis: ${list.join(', ') || '(nenhum)'}.
-Defina AVD_NAME para um AVD válido ou conecte um device físico (UDID).`
+                            `AVD '${avdName}' nǜo encontrado. Dispon��veis: ${list.join(', ') || '(nenhum)'}.
+Defina AVD_NAME para um AVD vǭlido ou conecte um device f��sico (UDID).`
                         );
                     }
                 }
             } catch (e) {
-                // Se o comando falhar, apenas avisa; o Appium ainda pode conseguir iniciar se houver device físico
+                // Se o comando falhar, aviso;s
                 if (e && e.message) throw e;
             }
         }
     },
 };
 
-// Define AVD automaticamente se informado por variável de ambiente
+// Define AVD automaticamente
 if (avdName) {
     exports.config.capabilities[0]['appium:avd'] = avdName;
 }
 
-// Define UDID do device físico, se informado por variável de ambiente
+// Define UDID do device físico
 if (udid) {
     exports.config.capabilities[0]['appium:udid'] = udid;
 }
+

@@ -47,3 +47,7 @@ npm run report
 ```
 
 O relatório será gerado em `cypress/reports/html/index.html`.
+
+## Autor
+
+Rogerio Melo Kinape
