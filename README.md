@@ -34,7 +34,7 @@ O projeto foi estruturado para ser modular, escalável e fácil de manter.
 Antes de começar, certifique-se de ter as seguintes ferramentas instaladas:
 
 - **Node.js:** (v22.20.0 ou superior)
-- **k6:** [Guia de Instalação](https://k6.io/docs/getting-started/installation/)
+- **k6:** [Guia de Instalação](https://grafana.com/docs/k6/latest/set-up/)
 - **Android Studio e SDK:** Para os testes móveis, é necessário ter o Android Studio instalado e o SDK do Android configurado corretamente.
 
 ## Instalação

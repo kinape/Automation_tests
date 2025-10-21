@@ -41,6 +41,15 @@ jobs:
         with:
           filename: k6/load-test.js
 
+      - name: Upload k6 summary artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-summary
+          path: |
+            k6/summary.html
+            k6/summary.json
+          if-no-files-found: warn
+
   appium-mobile-test:
     runs-on: macos-13
     steps:

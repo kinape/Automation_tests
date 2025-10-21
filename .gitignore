@@ -17,3 +17,7 @@ Thumbs.db
 
 Automation_tests.code-workspace 
 mobile/app/ApiDemos-debug.apk 
+
+# Relatórios k6
+k6/summary.html
+k6/summary.json
