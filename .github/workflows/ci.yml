@@ -42,7 +42,7 @@ jobs:
           filename: k6/load-test.js
 
   appium-mobile-test:
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -58,13 +58,12 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Cache Gradle and Android SDK
+      - name: Cache Gradle
         uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper/dists
-            ~/.android/sdk
           key: ${{ runner.os }}-android-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
 
       - name: Install dependencies
@@ -78,11 +77,17 @@ jobs:
       - name: Run Android emulator and tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          # Use Apple Silicon-compatible system image on macOS 14 runners
+          # Use Intel-compatible system image on macOS 13 runners
           api-level: 34
-          arch: arm64-v8a
+          arch: x86_64
           target: google_apis
           profile: pixel_6
-          emulator-options: -no-window -no-snapshot -noaudio -no-boot-anim -gpu swiftshader_indirect
+          emulator-options: -no-window -no-snapshot -noaudio -no-boot-anim -gpu swiftshader_indirect -no-metrics
+          pre-emulator-launch-script: |
+            echo "Resetting adb server using action SDK"
+            which adb || true
+            adb kill-server || true
+            adb start-server
+            adb version
           appium: true # Inicia o Appium automaticamente
           script: npm run test:mobile
