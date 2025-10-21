@@ -18,9 +18,6 @@
 import './commands'
 import { faker } from '@faker-js/faker';
 
-// Alternatively, you can require() commands.js as well:
-// require('./commands')
-
 Cypress.on('window:before:load', (win) => {
   win.response = {};
 });
