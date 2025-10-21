@@ -21,3 +21,12 @@ mobile/app/ApiDemos-debug.apk
 # Relatórios k6
 k6/summary.html
 k6/summary.json
+
+# Relatórios Allure (mobile / WebdriverIO)
+mobile/reports/
+mobile/reports/allure-results/
+mobile/reports/allure-report/
+
+# Variáveis de ambiente locais
+.env
+.env.*

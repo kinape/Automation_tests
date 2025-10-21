@@ -29,7 +29,7 @@ exports.config = {
         'appium:uiautomator2ServerInstallTimeout': 600000,
         'appium:uiautomator2ServerLaunchTimeout': 600000,
         'appium:androidInstallTimeout': 600000,
-        'appium:androidDeviceReadyTimeout': 300000,
+        'appium:androidDeviceReadyTimeout': 600000,
         'appium:newCommandTimeout': 600,
         'appium:appWaitActivity': '*',
     }],
@@ -42,13 +42,30 @@ exports.config = {
     connectionRetryCount: 3,
     services: ['appium'],
     framework: 'mocha',
-    reporters: ['spec'],
+    reporters: [
+        'spec',
+        ['allure', {
+            outputDir: path.join(__dirname, '..', 'reports', 'allure-results'),
+            disableWebdriverStepsReporting: true,
+            disableWebdriverScreenshotsReporting: false,
+        }]
+    ],
     mochaOpts: {
         ui: 'bdd',
         timeout: 120000,
     },
     autoCompileOpts: {
         autoCompile: false,
+    },
+    // Captura screenshot quando um teste falhar para enriquecer o relatório
+    afterTest: async function (test, context, { error, result, duration, passed }) {
+        if (!passed) {
+            try {
+                await browser.takeScreenshot();
+            } catch (e) {
+                // noop
+            }
+        }
     },
     onPrepare: function () {
         const sdkRoot = process.env.ANDROID_SDK_ROOT || process.env.ANDROID_HOME || path.join(process.env.LOCALAPPDATA || '', 'Android', 'Sdk');

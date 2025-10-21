@@ -102,3 +102,14 @@ jobs:
             adb start-server
             adb version
           script: npm run test:mobile:ci
+
+      - name: Generate Allure report (mobile)
+        run: npx allure generate --clean mobile/reports/allure-results -o mobile/reports/allure-report
+
+      - name: Upload mobile Allure report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mobile-allure-report
+          path: mobile/reports/allure-report
+          if-no-files-found: warn

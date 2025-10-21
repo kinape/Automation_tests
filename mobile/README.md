@@ -35,8 +35,25 @@ Este diretório contém a suíte E2E mobile usando WebdriverIO 8 com Appium (And
 - Executar apenas os testes (assumindo device/emulador já ativo):
 
   ```bash
-  npm run test:mobile:win
+  npm run test:mobile
   ```
+
+## Relatório (Allure)
+
+- Após a execução dos testes, gere o relatório Allure:
+
+  ```bash
+  npm run allure:generate:mobile
+  ```
+
+- Para abrir o relatório localmente:
+
+  ```bash
+  npm run allure:open:mobile
+  ```
+
+- Em CI (GitHub Actions), o job `appium-mobile-test` gera e publica o artefato
+  `mobile-allure-report` automaticamente.
 
 ## Variáveis de Ambiente Suportadas
 

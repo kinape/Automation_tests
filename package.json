@@ -13,7 +13,9 @@
     "test:mobile:win": "set \"NODE_OPTIONS=\" && if not defined ANDROID_HOME set \"ANDROID_HOME=%LOCALAPPDATA%\\Android\\Sdk\" && if not defined ANDROID_SDK_ROOT set \"ANDROID_SDK_ROOT=%ANDROID_HOME%\" && set \"PATH=%PATH%;%ANDROID_HOME%\\platform-tools;%ANDROID_HOME%\\emulator;%ANDROID_HOME%\\tools;%ANDROID_HOME%\\tools\\bin\" && wdio run ./mobile/config/wdio.conf.js --autoCompileOpts.autoCompile=false",
     "android:emu:start": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\mobile\\scripts\\start-avd.ps1 -AvdName Pixel_6_API_34",
     "android:emu:start:headless": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\mobile\\scripts\\start-avd.ps1 -AvdName Pixel_6_API_34 -GpuMode swiftshader_indirect -NoWindow",
-    "test:mobile:with-avd": "npm run android:emu:start:headless && set \"AVD_NAME=Pixel_6_API_34\" && npm run test:mobile:win"
+    "test:mobile:with-avd": "npm run android:emu:start:headless && set \"AVD_NAME=Pixel_6_API_34\" && npm run test:mobile:win",
+    "allure:generate:mobile": "npx allure generate --clean mobile/reports/allure-results -o mobile/reports/allure-report",
+    "allure:open:mobile": "npx allure open mobile/reports/allure-report"
   },
   "repository": {
     "type": "git",
@@ -32,6 +34,8 @@
     "@wdio/local-runner": "^8.38.2",
     "@wdio/mocha-framework": "^8.38.0",
     "@wdio/spec-reporter": "^8.38.2",
+    "@wdio/allure-reporter": "^8.38.2",
+    "allure-commandline": "^2.27.0",
     "@wdio/appium-service": "^8.38.2",
     "appium": "^2.10.3",
     "appium-uiautomator2-driver": "^3.5.3",
