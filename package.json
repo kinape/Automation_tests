@@ -9,6 +9,7 @@
     "cy:run": "npm run test && npm run report",
     "k6:run": "k6 run k6/load-test.js",
     "test:mobile": "set \"NODE_OPTIONS=\" && wdio run ./mobile/config/wdio.conf.js --autoCompileOpts.autoCompile=false",
+    "test:mobile:ci": "NODE_OPTIONS= wdio run ./mobile/config/wdio.conf.js --autoCompileOpts.autoCompile=false",
     "test:mobile:win": "set \"NODE_OPTIONS=\" && if not defined ANDROID_HOME set \"ANDROID_HOME=%LOCALAPPDATA%\\Android\\Sdk\" && if not defined ANDROID_SDK_ROOT set \"ANDROID_SDK_ROOT=%ANDROID_HOME%\" && set \"PATH=%PATH%;%ANDROID_HOME%\\platform-tools;%ANDROID_HOME%\\emulator;%ANDROID_HOME%\\tools;%ANDROID_HOME%\\tools\\bin\" && wdio run ./mobile/config/wdio.conf.js --autoCompileOpts.autoCompile=false",
     "android:emu:start": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\mobile\\scripts\\start-avd.ps1 -AvdName Pixel_6_API_34",
     "android:emu:start:headless": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\mobile\\scripts\\start-avd.ps1 -AvdName Pixel_6_API_34 -GpuMode swiftshader_indirect -NoWindow",

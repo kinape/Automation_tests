@@ -52,7 +52,7 @@ jobs:
           if-no-files-found: warn
 
   appium-mobile-test:
-    runs-on: macos-13
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -87,19 +87,18 @@ jobs:
       - name: Run Android emulator and tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          # Imagem compatível com Intel no macOS 13
           api-level: 34
           arch: x86_64
           target: google_apis
           profile: pixel_6
-          emulator-options: -no-window -no-snapshot -noaudio -no-boot-anim -gpu swiftshader_indirect -no-metrics
-          emulator-boot-timeout: 600
+          emulator-options: -no-window -no-snapshot -noaudio -no-boot-anim -gpu swiftshader_indirect -camera-back none -camera-front none
+          emulator-boot-timeout: 900
           disable-animations: true
+          disable-linux-hw-accel: true
           pre-emulator-launch-script: |
             echo "Resetting adb server using action SDK"
             which adb || true
             adb kill-server || true
             adb start-server
             adb version
-          appium: false
-          script: npm run test:mobile
+          script: npm run test:mobile:ci
