@@ -34,14 +34,28 @@
 
     // Geração automática de relatórios ao final da execução
     export function handleSummary(data) {
-      const metrics = data.metrics || {};
+      const metrics = (data && data.metrics) ? data.metrics : {};
 
-      const httpReqs = metrics.http_reqs?.values?.count || 0;
-      const httpFailRate = metrics.http_req_failed?.values?.rate ?? 0;
-      const httpP95 = metrics.http_req_duration?.values?.["p(95)"] ?? 0;
-      const httpAvg = metrics.http_req_duration?.values?.avg ?? 0;
-      const checksPasses = metrics.checks?.passes ?? 0;
-      const checksFails = metrics.checks?.fails ?? 0;
+      function get(obj, keys, def) {
+        var cur = obj;
+        for (var i = 0; i < keys.length; i++) {
+          var k = keys[i];
+          if (cur && (k in cur)) {
+            cur = cur[k];
+          } else {
+            cur = undefined;
+            break;
+          }
+        }
+        return (cur === undefined || cur === null) ? def : cur;
+      }
+
+      const httpReqs = get(metrics, ['http_reqs', 'values', 'count'], 0);
+      const httpFailRate = get(metrics, ['http_req_failed', 'values', 'rate'], 0);
+      const httpP95 = get(metrics, ['http_req_duration', 'values', 'p(95)'], 0);
+      const httpAvg = get(metrics, ['http_req_duration', 'values', 'avg'], 0);
+      const checksPasses = get(metrics, ['checks', 'passes'], 0);
+      const checksFails = get(metrics, ['checks', 'fails'], 0);
 
       const passRate = (1 - httpFailRate) * 100;
 
