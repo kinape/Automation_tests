@@ -23,12 +23,14 @@ exports.config = {
         'appium:app': appPathEnv ? path.resolve(appPathEnv) : path.join(__dirname, '..', 'app', 'ApiDemos-debug.apk'),
         'appium:autoGrantPermissions': true,
         'appium:ignoreHiddenApiPolicyError': true,
-        // Timeouts e ajustes para estabilizar o boot e comandos ADB
-        'appium:adbExecTimeout': 240000,
-        'appium:avdLaunchTimeout': 180000,
-        'appium:uiautomator2ServerInstallTimeout': 180000,
-        'appium:uiautomator2ServerLaunchTimeout': 180000,
-        'appium:newCommandTimeout': 120,
+        // Timeouts e ajustes para estabilizar o boot e comandos ADB (aumentados para CI)
+        'appium:adbExecTimeout': 600000,
+        'appium:avdLaunchTimeout': 600000,
+        'appium:uiautomator2ServerInstallTimeout': 600000,
+        'appium:uiautomator2ServerLaunchTimeout': 600000,
+        'appium:androidInstallTimeout': 600000,
+        'appium:androidDeviceReadyTimeout': 300000,
+        'appium:newCommandTimeout': 600,
         'appium:appWaitActivity': '*',
     }],
     logLevel: 'info',
@@ -36,14 +38,14 @@ exports.config = {
     baseUrl: 'http://localhost',
     waitforTimeout: 10000,
     // Aumenta o timeout de criação de sessão/requests WebDriver para acomodar instalações/lançamentos mais lentos em CI
-    connectionRetryTimeout: 300000,
+    connectionRetryTimeout: 600000,
     connectionRetryCount: 3,
     services: ['appium'],
     framework: 'mocha',
     reporters: ['spec'],
     mochaOpts: {
         ui: 'bdd',
-        timeout: 60000,
+        timeout: 120000,
     },
     autoCompileOpts: {
         autoCompile: false,
