@@ -1,4 +1,5 @@
 # Projeto de Automação de Testes
+[![Autor: Rogerio Melo Kinape](https://img.shields.io/badge/autor-Rogerio%20Melo%20Kinape-blue)](#autor)
 
 ## Descrição
 
@@ -88,7 +89,3 @@ Para executar os testes móveis, siga os passos abaixo:
    ```bash
    npm run test:mobile:with-avd
    ```
-
-## Autor
-
-Rogerio Melo Kinape

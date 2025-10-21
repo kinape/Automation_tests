@@ -1,5 +1,6 @@
 
 # Projeto de Automação de Testes com Cypress e Cucumber
+[![Autor: Rogerio Melo Kinape](https://img.shields.io/badge/autor-Rogerio%20Melo%20Kinape-blue)](#autor)
 
 Este projeto contém testes automatizados para uma API e uma aplicação web, utilizando Cypress e Cucumber.
 
@@ -47,7 +48,3 @@ npm run report
 ```
 
 O relatório será gerado em `cypress/reports/html/index.html`.
-
-## Autor
-
-Rogerio Melo Kinape
