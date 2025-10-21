@@ -22,6 +22,7 @@ exports.config = {
         'appium:deviceName': deviceNameEnv || 'Android Emulator',
         'appium:app': appPathEnv ? path.resolve(appPathEnv) : path.join(__dirname, '..', 'app', 'ApiDemos-debug.apk'),
         'appium:autoGrantPermissions': true,
+        'appium:ignoreHiddenApiPolicyError': true,
         // Timeouts e ajustes para estabilizar o boot e comandos ADB
         'appium:adbExecTimeout': 240000,
         'appium:avdLaunchTimeout': 180000,
