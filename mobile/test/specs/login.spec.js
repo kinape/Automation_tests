@@ -1,14 +1,22 @@
 describe('ApiDemos - Smoke', () => {
     it('deve abrir o app e navegar para Views', async () => {
-        // Verifica que o item "Views" está presente na tela inicial e clica nele
-        // Usa accessibility id (content-desc) que é mais estável/rápido que busca por texto
+        // Garante que o item "Views" esteja visível; se não, rola até ele
         const viewsItem = await $('~Views');
-        await viewsItem.waitForDisplayed({ timeout: 60000 });
-        await viewsItem.click();
+        const viewsVisible = await viewsItem.isDisplayed().catch(() => false);
+        if (!viewsVisible) {
+            await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView("Views")');
+        }
+        await (await $('~Views')).waitForDisplayed({ timeout: 60000 });
+        await (await $('~Views')).click();
 
-        // Verifica que o item "Buttons" está presente na lista de Views
+        // Garante que o item "Buttons" esteja visível em "Views"; se necessário, rola
         const buttonsItem = await $('~Buttons');
-        const isDisplayed = await buttonsItem.isDisplayed();
-        expect(isDisplayed).toBe(true);
+        const buttonsVisible = await buttonsItem.isDisplayed().catch(() => false);
+        if (!buttonsVisible) {
+            await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView("Buttons")');
+        }
+        await (await $('~Buttons')).waitForDisplayed({ timeout: 30000 });
+        expect(await (await $('~Buttons')).isDisplayed()).toBe(true);
     });
 });
+

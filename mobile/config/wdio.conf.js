@@ -57,6 +57,47 @@ exports.config = {
     autoCompileOpts: {
         autoCompile: false,
     },
+    // Aguarda o Android estar completamente pronto antes de iniciar os testes
+    before: function () {
+        const maxWaitMs = 5 * 60 * 1000; // 5 minutos
+        const start = Date.now();
+
+        const adbArgsBase = [];
+        if (udid) {
+            adbArgsBase.push('-s', udid);
+        }
+
+        function adbGetprop(prop) {
+            const res = cp.spawnSync('adb', [...adbArgsBase, 'shell', 'getprop', prop], { shell: true, encoding: 'utf8' });
+            return (res.stdout || '').trim();
+        }
+
+        function isBootCompleted() {
+            const sysBoot = adbGetprop('sys.boot_completed');
+            const devBoot = adbGetprop('dev.bootcomplete');
+            const bootAnim = cp.spawnSync('adb', [...adbArgsBase, 'shell', 'getprop', 'init.svc.bootanim'], { shell: true, encoding: 'utf8' });
+            const anim = (bootAnim.stdout || '').trim().toLowerCase();
+            return (sysBoot === '1' || devBoot === '1') && (anim === 'stopped' || anim === '');
+        }
+
+        while (Date.now() - start < maxWaitMs) {
+            try {
+                // Verifica conectividade com o device
+                const getState = cp.spawnSync('adb', [...adbArgsBase, 'get-state'], { shell: true, encoding: 'utf8' });
+                const stateOk = (getState.stdout || '').toLowerCase().includes('device');
+                if (stateOk && isBootCompleted()) {
+                    // Margem de segurança breve após boot
+                    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 3000);
+                    return;
+                }
+            } catch {}
+            // Dorme 2s antes de tentar novamente
+            Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 2000);
+        }
+
+        // Se chegar aqui, não ficou pronto no tempo esperado; segue e deixa timeouts do Appium/WDIO lidarem
+        // (opcionalmente poderíamos lançar erro para falhar mais cedo)
+    },
     // Captura screenshot quando um teste falhar para enriquecer o relatório
     afterTest: async function (test, context, { error, result, duration, passed }) {
         if (!passed) {
