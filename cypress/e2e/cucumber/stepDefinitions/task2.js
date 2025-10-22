@@ -39,4 +39,3 @@ When("eu envio uma requisição POST para o login com o corpo", (body) => {
     });
   });
 });
-
