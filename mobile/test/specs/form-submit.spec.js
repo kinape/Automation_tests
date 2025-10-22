@@ -25,7 +25,7 @@ describe('ApiDemos - Formulário', () => {
         const usernameField = await $("id:io.appium.android.apis:id/username_edit");
         const passwordField = await $("id:io.appium.android.apis:id/password_edit");
         await usernameField.waitForDisplayed({ timeout: 20000 });
-        await usernameField.setValue('usuario.teste');
+        await usernameField.setValue('rogerio.teste');
         await passwordField.setValue('Senha@123');
 
         // Envia (OK)
