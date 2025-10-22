@@ -31,8 +31,8 @@ When("eu preencho o formulário de pagamento com dados válidos", () => {
   cy.get('#input-payment-address-1').type('Test Address');
   cy.get('#input-payment-city').type('Test City');
   cy.get('#input-payment-postcode').type('12345');
-  cy.get('#input-payment-country').select('Brazil');
-  cy.get('#input-payment-zone').select('São Paulo');
+  cy.get('#input-payment-country').select('Brazil', { force: true });
+  cy.get('#input-payment-zone').select('São Paulo', { force: true });
   cy.get('input[name="agree"]').check({force: true});
   cy.get('#button-save').click();
 });
@@ -56,8 +56,8 @@ When("eu preencho o formulário de pagamento com um endereço de entrega incompl
   cy.get('#input-payment-lastname').type(user.lastName);
   cy.get('#input-payment-city').type('Test City');
   cy.get('#input-payment-postcode').type('12345');
-  cy.get('#input-payment-country').select('Brazil');
-  cy.get('#input-payment-zone').select('São Paulo');
+  cy.get('#input-payment-country').select('Brazil', { force: true });
+  cy.get('#input-payment-zone').select('São Paulo', { force: true });
   cy.get('input[name="agree"]').check({force: true});
   cy.get('#button-save').click();
 });
