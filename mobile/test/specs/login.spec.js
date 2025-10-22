@@ -1,7 +1,7 @@
 describe('ApiDemos - Smoke', () => {
     it('deve abrir o app e navegar para Views', async () => {
         // Aguarda a tela inicial do API Demos para evitar flakiness
-        const title = await $("//android.widget.TextView[@text='API Demos']");
+                const title = await $('~API Demos');
         await title.waitForDisplayed({ timeout: 60000 });
 
         // Tenta por accessibility id e faz fallback por texto com rolagem

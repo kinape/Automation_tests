@@ -1,7 +1,32 @@
 describe('ApiDemos - Formulário', () => {
+    async function ensureAppReady() {
+        // Aguarda elementos-chave da tela inicial ou força abrir a Activity principal
+        const ready = await browser.waitUntil(async () => {
+            const titles = await $$("//android.widget.TextView[@text='API Demos']");
+            if (titles.length > 0) return true;
+            const appItem = await $('~App').catch(() => undefined);
+            if (appItem && await appItem.isDisplayed().catch(() => false)) return true;
+            const viewsItem = await $('~Views').catch(() => undefined);
+            if (viewsItem && await viewsItem.isDisplayed().catch(() => false)) return true;
+            return false;
+        }, { timeout: 30000, interval: 500 }).catch(() => false);
+
+        if (!ready) {
+            // Tenta trazer o aplicativo para o primeiro plano explicitamente
+            try {
+                await driver.startActivity('io.appium.android.apis', 'io.appium.android.apis.ApiDemos');
+            } catch (e) {
+                try {
+                    await driver.execute('mobile: startActivity', { appPackage: 'io.appium.android.apis', appActivity: 'io.appium.android.apis.ApiDemos' });
+                } catch (_) { /* noop */ }
+            }
+            await browser.pause(2000);
+        }
+    }
+
     it('deve preencher e enviar o formulário de entrada de texto', async () => {
         // Aguarda a tela inicial do API Demos
-        const title = await $("//android.widget.TextView[@text='API Demos']");
+                const title = await $('~API Demos');
         await title.waitForDisplayed({ timeout: 60000 });
 
         // Abre a seção "App" com fallback para texto + rolagem
@@ -51,4 +76,3 @@ describe('ApiDemos - Formulário', () => {
         expect(await screenTitle.isDisplayed()).toBe(true);
     });
 });
-
