@@ -1,22 +1,25 @@
 describe('ApiDemos - Smoke', () => {
     it('deve abrir o app e navegar para Views', async () => {
-        // Garante que o item "Views" esteja visível; se não, rola até ele
-        const viewsItem = await $('~Views');
-        const viewsVisible = await viewsItem.isDisplayed().catch(() => false);
-        if (!viewsVisible) {
-            await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView("Views")');
-        }
-        await (await $('~Views')).waitForDisplayed({ timeout: 60000 });
-        await (await $('~Views')).click();
+        // Aguarda a tela inicial do API Demos para evitar flakiness
+        const title = await $("//android.widget.TextView[@text='API Demos']");
+        await title.waitForDisplayed({ timeout: 60000 });
 
-        // Garante que o item "Buttons" esteja visível em "Views"; se necessário, rola
-        const buttonsItem = await $('~Buttons');
-        const buttonsVisible = await buttonsItem.isDisplayed().catch(() => false);
-        if (!buttonsVisible) {
-            await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView("Buttons")');
+        // Tenta por accessibility id e faz fallback por texto com rolagem
+        let viewsItem = await $('~Views').catch(() => undefined);
+        if (!viewsItem || !(await viewsItem.isDisplayed().catch(() => false))) {
+            await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView("Views")');
+            viewsItem = await $("android=new UiSelector().text(\"Views\")");
         }
-        await (await $('~Buttons')).waitForDisplayed({ timeout: 30000 });
-        expect(await (await $('~Buttons')).isDisplayed()).toBe(true);
+        await viewsItem.waitForDisplayed({ timeout: 60000 });
+        await viewsItem.click();
+
+        // Na tela de "Views", tenta por accessibility id e faz fallback por texto com rolagem
+        let buttonsItem = await $('~Buttons').catch(() => undefined);
+        if (!buttonsItem || !(await buttonsItem.isDisplayed().catch(() => false))) {
+            await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView("Buttons")');
+            buttonsItem = await $("android=new UiSelector().text(\"Buttons\")");
+        }
+        await buttonsItem.waitForDisplayed({ timeout: 30000 });
+        expect(await buttonsItem.isDisplayed()).toBe(true);
     });
 });
-
