@@ -80,12 +80,6 @@ Para executar os testes móveis, siga os passos abaixo:
 
 2. **Execute os Testes Móveis:**
    ```bash
-   npm run test:mobile:win
+   npm run test:mobile
    ```
    *Este comando é específico para o ambiente Windows e configura as variáveis de ambiente necessárias.*
-
-3. **Comando Combinado (Headless):**
-   Para iniciar um emulador em modo headless e executar os testes em sequência, use:
-   ```bash
-   npm run test:mobile:with-avd
-   ```

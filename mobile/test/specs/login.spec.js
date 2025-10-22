@@ -1,25 +1,46 @@
-describe('ApiDemos - Smoke', () => {
-    it('deve abrir o app e navegar para Views', async () => {
-        // Aguarda a tela inicial do API Demos para evitar flakiness
-                const title = await $('~API Demos');
-        await title.waitForDisplayed({ timeout: 60000 });
+describe('ApiDemos - Formulário', () => {
+    it('deve preencher e enviar o formulário de entrada de texto', async () => {
+        // Abre a seção "App"
+        const appItem = await $('~App');
+        await appItem.waitForDisplayed({ timeout: 60000 });
+        await appItem.click();
 
-        // Tenta por accessibility id e faz fallback por texto com rolagem
-        let viewsItem = await $('~Views').catch(() => undefined);
-        if (!viewsItem || !(await viewsItem.isDisplayed().catch(() => false))) {
-            await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView("Views")');
-            viewsItem = await $("android=new UiSelector().text(\"Views\")");
+        // Abre "Alert Dialogs"
+        let alertDialogsItem = await $('~Alert Dialogs');
+        if (!(await alertDialogsItem.isDisplayed().catch(() => false))) {
+            await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView("Alert Dialogs")');
+            alertDialogsItem = await $('~Alert Dialogs');
         }
-        await viewsItem.waitForDisplayed({ timeout: 60000 });
-        await viewsItem.click();
+        await alertDialogsItem.click();
 
-        // Na tela de "Views", tenta por accessibility id e faz fallback por texto com rolagem
-        let buttonsItem = await $('~Buttons').catch(() => undefined);
-        if (!buttonsItem || !(await buttonsItem.isDisplayed().catch(() => false))) {
-            await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView("Buttons")');
-            buttonsItem = await $("android=new UiSelector().text(\"Buttons\")");
+        // Abre o diálogo de entrada de texto (formulário)
+        let textEntryItem = await $('~Text Entry dialog');
+        if (!(await textEntryItem.isDisplayed().catch(() => false))) {
+            await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView("Text Entry dialog")');
+            textEntryItem = await $('~Text Entry dialog');
         }
-        await buttonsItem.waitForDisplayed({ timeout: 30000 });
-        expect(await buttonsItem.isDisplayed()).toBe(true);
+        await textEntryItem.click();
+
+        // Preenche os campos do formulário
+        const usernameField = await $("id:io.appium.android.apis:id/username_edit");
+        const passwordField = await $("id:io.appium.android.apis:id/password_edit");
+        await usernameField.waitForDisplayed({ timeout: 20000 });
+        await usernameField.setValue('usuario.teste');
+        await passwordField.setValue('Senha@123');
+
+        // Envia (OK)
+        const okButton = await $("id:android:id/button1");
+        await okButton.click();
+
+        // Valida que o diálogo foi fechado (OK/Cancel não devem mais estar visíveis)
+        await browser.waitUntil(async () => !(await okButton.isDisplayed().catch(() => false)), {
+            timeout: 20000,
+            timeoutMsg: 'O diálogo de formulário não foi fechado após enviar.'
+        });
+
+        // Verifica que ainda estamos na tela de "Alert Dialogs"
+        const screenTitle = await $("//android.widget.TextView[@text='App/Alert Dialogs']");
+        expect(await screenTitle.isDisplayed()).toBe(true);
     });
 });
+
