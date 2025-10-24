@@ -1,4 +1,4 @@
-# Testes de Carga com k6
+﻿# Testes de Carga com k6
 [![Autor: Rogerio Melo Kinape](https://img.shields.io/badge/autor-Rogerio%20Melo%20Kinape-blue)](#autor)
 
 Este diretório contém o script de teste de carga usando k6 para validar desempenho e resiliência de endpoints HTTP.
@@ -17,15 +17,15 @@ Este diretório contém o script de teste de carga usando k6 para validar desemp
 
 - Via npm script (recomendado na raiz do projeto):
 
-  ```bash
-  npm run k6:run
-  ```
+```bash
+npm run k6:run
+```
 
-- Diretamente com k6:
+- Diretamente com k6 (com host customizado):
 
-  ```bash
-  k6 run k6/load-test.js
-  ```
+```bash
+K6_API_BASE_URL=http://localhost:3000 k6 run k6/load-test.js
+```
 
 Ao final da execução, o próprio script gera dois arquivos de resumo automaticamente:
 
@@ -53,20 +53,20 @@ k6 run --vus 200 --duration 2m k6/load-test.js
 
 Se os limites não forem atendidos, o k6 marca a execução como falha.
 
-## Alvo do Teste
+## API alvo local
 
-O script de exemplo faz `GET` em `https://test-api.k6.io/public/crocodiles/` e valida `status === 200`.
+O script aponta para a API local (endpoint: `GET /public/crocodiles/`). Use a variável `K6_API_BASE_URL` para definir o host/base:
+
+```bash
+K6_API_BASE_URL=http://localhost:3000 k6 run k6/load-test.js
+```
 
 ## Execução em CI
 
-Já há um job configurado em `/.github/workflows/ci.yml` usando `grafana/k6-action` com `filename: k6/load-test.js`.
+O workflow `.github/workflows/ci.yml` inicia a API local, aguarda `GET /health`, instala o k6 (via `grafana/setup-k6-action`) e executa:
 
-- Os thresholds definidos no script controlam o resultado do job.
-- Ajuste estágios e limites conforme suas metas de SLO.
+```bash
+k6 run k6/load-test.js
+```
 
-## Análise dos Resultados (guia rápido)
-
-- Taxa de sucesso próxima a 100% indica boa resiliência sob carga. Se cair, inspecione `http_req_failed` e erros de backend.
-- Latência `p(95)` é mais representativa da experiência: mantenha-a abaixo do seu SLO (ex.: 500 ms). Se acima, investigue gargalos.
-- Verifique `checks` (passes/fails) para validar resposta funcional (ex.: `status === 200`). Falhas apontam problemas de corretude.
-- Compare estágios (rampa, sustentação, descida) para identificar degradação com aumento de VUs.
+com `K6_API_BASE_URL` definido para `http://localhost:3000`.

@@ -1,102 +1,82 @@
 class ReqresAPI {
-      listUsers(url) {
-        return cy.request({
-          method: 'GET',
-          url: `https://reqres.in/api${url}`,
-          headers: {
-            'x-api-key': 'reqres-free-v1',
-          },
-        });
-      }
+  baseUrl() {
+    return Cypress.env('API_BASE_URL') || 'http://localhost:3000/api';
+  }
 
-      createUser(url, body) {
-        return cy.request({
-          method: 'POST',
-          url: `https://reqres.in/api${url}`,
-          body: JSON.parse(body),
-          headers: {
-            'x-api-key': 'reqres-free-v1',
-          },
-        });
-      }
+  listUsers(url) {
+    return cy.request({
+      method: 'GET',
+      url: `${this.baseUrl()}${url}`,
+    });
+  }
 
-      getSingleUser(url) {
-        return cy.request({
-          method: 'GET',
-          url: `https://reqres.in/api${url}`,
-          headers: {
-            'x-api-key': 'reqres-free-v1',
-          },
-        });
-      }
+  createUser(url, body) {
+    return cy.request({
+      method: 'POST',
+      url: `${this.baseUrl()}${url}`,
+      body: JSON.parse(body),
+    });
+  }
 
-      updateUser(url, body) {
-        return cy.request({
-          method: 'PUT',
-          url: `https://reqres.in/api${url}`,
-          body: JSON.parse(body),
-          headers: {
-            'x-api-key': 'reqres-free-v1',
-          },
-        });
-      }
+  getSingleUser(url) {
+    return cy.request({
+      method: 'GET',
+      url: `${this.baseUrl()}${url}`,
+    });
+  }
 
-      deleteUser(url) {
-        return cy.request({
-          method: 'DELETE',
-          url: `https://reqres.in/api${url}`,
-          headers: {
-            'x-api-key': 'reqres-free-v1',
-          },
-        });
-      }
+  updateUser(url, body) {
+    return cy.request({
+      method: 'PUT',
+      url: `${this.baseUrl()}${url}`,
+      body: JSON.parse(body),
+    });
+  }
 
-      getUserExpectingError(url) {
-        return cy.request({
-          method: 'GET',
-          url: `https://reqres.in/api${url}`,
-          failOnStatusCode: false,
-          headers: {
-            'x-api-key': 'reqres-free-v1',
-          },
-        });
-      }
+  deleteUser(url) {
+    return cy.request({
+      method: 'DELETE',
+      url: `${this.baseUrl()}${url}`,
+    });
+  }
 
-      loginExpectingError(body) {
-        return cy.request({
-          method: 'POST',
-          url: 'https://reqres.in/api/login',
-          body: JSON.parse(body),
-          failOnStatusCode: false,
-          headers: {
-            'x-api-key': 'reqres-free-v1',
-          },
-        });
-      }
+  getUserExpectingError(url) {
+    return cy.request({
+      method: 'GET',
+      url: `${this.baseUrl()}${url}`,
+      failOnStatusCode: false,
+    });
+  }
 
-      postWithEmptyBodyExpectingError(url) {
-        return cy.request({
-          method: 'POST',
-          url: `https://reqres.in/api${url}`,
-          failOnStatusCode: false,
-          headers: {
-            'x-api-key': 'reqres-free-v1',
-          },
-        });
-      }
+  loginExpectingError(body) {
+    return cy.request({
+      method: 'POST',
+      url: `${this.baseUrl()}/login`,
+      body: JSON.parse(body),
+      failOnStatusCode: false,
+    });
+  }
 
-      postMalformedBodyExpectingError(url, body) {
-        return cy.request({
-          method: 'POST',
-          url: `https://reqres.in/api${url}`,
-          body: body, // Enviando o corpo como está, sem parse
-          failOnStatusCode: false,
-          headers: {
-            'x-api-key': 'reqres-free-v1',
-            'Content-Type': 'application/json',
-          },
-        });
-      }
-    }
+  postWithEmptyBodyExpectingError(url) {
+    return cy.request({
+      method: 'POST',
+      url: `${this.baseUrl()}${url}`,
+      failOnStatusCode: false,
+    });
+  }
 
-    export default new ReqresAPI();
+  postMalformedBodyExpectingError(url, body) {
+    return cy.request({
+      method: 'POST',
+      url: `${this.baseUrl()}${url}`,
+      body: body, // Envia o corpo como está, sem parse
+      failOnStatusCode: false,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+}
+
+export default new ReqresAPI();
+

@@ -1,4 +1,4 @@
-# Testes Mobile (WebdriverIO + Appium)
+﻿# Testes Mobile (WebdriverIO + Appium)
 [![Autor: Rogerio Melo Kinape](https://img.shields.io/badge/autor-Rogerio%20Melo%20Kinape-blue)](#autor)
 
 Este diretório contém a suíte E2E mobile usando WebdriverIO 8 com Appium (Android).
@@ -22,38 +22,38 @@ Este diretório contém a suíte E2E mobile usando WebdriverIO 8 com Appium (And
 
 - Instale dependências na raiz do projeto:
 
-  ```bash
-  npm install
-  ```
+```bash
+npm install
+```
 
 - Inicie um emulador Android em modo headless e execute os testes:
 
-  ```bash
-  npm run test:mobile:with-avd
-  ```
+```bash
+npm run test:mobile:with-avd
+```
 
 - Executar apenas os testes (assumindo device/emulador já ativo):
 
-  ```bash
-  npm run test:mobile
-  ```
+```bash
+npm run test:mobile
+```
 
 ## Relatório (Allure)
 
 - Após a execução dos testes, gere o relatório Allure:
 
-  ```bash
-  npm run allure:generate:mobile
-  ```
+```bash
+npm run allure:generate:mobile
+```
 
 - Para abrir o relatório localmente:
 
-  ```bash
-  npm run allure:open:mobile
-  ```
+```bash
+npm run allure:open:mobile
+```
 
-- Em CI (GitHub Actions), o job `appium-mobile-test` gera e publica o artefato
-  `mobile-allure-report` automaticamente.
+- Em CI (GitHub Actions), a suíte mobile é executada no job `appium-mobile-test`
+  e o relatório Allure é publicado como artefato `mobile-allure-report`.
 
 ## Variáveis de Ambiente Suportadas
 
@@ -74,4 +74,4 @@ $env:APP_PATH="C:\\apps\\MeuApp.apk"; $env:AVD_NAME="Pixel_6_API_34"; npm run te
 
 - O `wdio.conf.js` valida se o SDK e `adb` estão acessíveis antes de iniciar.
 - O APK é checado quanto à assinatura ZIP válida para evitar "Invalid file" no Appium.
-- Em CI (GitHub Actions) o emulador é gerenciado por `reactivecircus/android-emulator-runner` e o Appium é iniciado pelo serviço do WDIO.
+- Em CI (GitHub Actions) o emulador é provisionado por `reactivecircus/android-emulator-runner` e o Appium é iniciado pelo serviço do WDIO.

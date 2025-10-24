@@ -1,4 +1,4 @@
-name: Cypress Tests CI
+name: CI
 
 on:
   push:
@@ -7,45 +7,50 @@ on:
     branches: [ main ]
 
 jobs:
-  cypress-test-and-report:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.19.0'
+          node-version: 20
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Run Cypress tests and generate report
-        run: npm run cy:run
+      - name: Start API server
+        run: |
+          nohup node api/server.js > api.log 2>&1 &
+          echo $! > api.pid
 
-      - name: Upload HTML report
+      - name: Wait for API to be ready
+        run: |
+          for i in {1..30}; do
+            if curl -s http://localhost:3000/health > /dev/null; then
+              echo "API is up"; exit 0; fi; sleep 1; done; echo "API did not start"; cat api.log; exit 1
+
+      - name: Run Cypress
+        env:
+          API_BASE_URL: http://localhost:3000/api
+        run: npx cypress run
+
+      - name: Setup k6
+        uses: grafana/setup-k6-action@v1
+
+      - name: Run k6 load test
+        env:
+          K6_API_BASE_URL: http://localhost:3000
+        run: k6 run k6/load-test.js
+
+      - name: Upload Cypress videos and screenshots on failure
+        if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: cypress-test-report
-          path: cypress/reports/html
-
-  k6-load-test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Run k6 local test
-        uses: grafana/k6-action@v0.2.0
-        with:
-          filename: k6/load-test.js
-
-      - name: Upload k6 summary artifacts
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: k6-summary
+          name: cypress-artifacts
           path: |
             k6/summary.html
             k6/summary.json

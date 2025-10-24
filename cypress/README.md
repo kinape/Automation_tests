@@ -1,46 +1,62 @@
-# Projeto de Automação de Testes com Cypress e Cucumber
+﻿# Projeto de Automação de Testes com Cypress e Cucumber
 [![Autor: Rogerio Melo Kinape](https://img.shields.io/badge/autor-Rogerio%20Melo%20Kinape-blue)](#autor)
 
 Este projeto contém testes automatizados para uma API e uma aplicação web, utilizando Cypress e Cucumber.
 
 ## Estrutura do Projeto
 
-O projeto está estruturado da seguinte forma:
-
-- `cypress/e2e/cucumber`: Contém os arquivos `.feature` com as especificações dos testes em Gherkin.
-- `cypress/e2e/cucumber/stepDefinitions`: Contém os arquivos de implementação dos passos dos testes.
-- `cypress/reports`: Contém os relatórios dos testes.
-- `cypress/screenshots`: Contém as capturas de tela dos testes que falharam.
-- `cypress/support`: Contém os comandos customizados e configurações do Cypress.
+- `cypress/e2e/cucumber`: Arquivos `.feature` com as especificações dos testes em Gherkin.
+- `cypress/e2e/cucumber/stepDefinitions`: Implementação dos passos dos testes.
+- `cypress/reports`: Relatórios dos testes.
+- `cypress/screenshots`: Capturas de tela dos testes que falharam.
+- `cypress/support`: Comandos customizados e configurações do Cypress.
 
 ## Funcionalidades Testadas
 
-- **API**: Os arquivos `task1.feature` e `task2.feature` contêm os testes para os endpoints da API.
-- **Aplicação Web**: Os arquivos `task3.feature` e `task4.feature` contêm os testes para cadastro, login e checkout simples em um e-commerce de exemplo.
+- API: `task1.feature` e `task2.feature` testam endpoints da API local.
+- Aplicação Web: `task3.feature` e `task4.feature` para cadastro, login e checkout simples.
 
 ## Bibliotecas Utilizadas
 
-- **Cypress**: Framework de automação de testes.
-- **Cucumber**: Ferramenta para escrever testes em Gherkin.
-- **@faker-js/faker**: Biblioteca para gerar dados falsos para os testes.
+- Cypress
+- Cucumber
+- @faker-js/faker
+
+## API Local (Node)
+
+Os testes de API usam uma API local em Node.
+
+- Inicie a API:
+
+```bash
+npm run api:start
+```
+
+- Base padrão: `http://localhost:3000/api`. Para mudar, use `API_BASE_URL`.
+
+Exemplo:
+
+```bash
+API_BASE_URL=http://localhost:3000/api npm run test
+```
 
 ## Como Executar os Testes
 
-1. Instale as dependências do projeto:
+1. Instale as dependências na raiz do projeto:
 
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+```
 
 2. Execute os testes:
 
-   ```bash
-   npm run test
-   ```
+```bash
+npm run test
+```
 
 ## Como Gerar o Relatório
 
-Para gerar o relatório do Cucumber, execute o seguinte comando:
+Para gerar o relatório do Cucumber, execute:
 
 ```bash
 npm run report

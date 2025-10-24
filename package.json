@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "cypress run",
+    "api:start": "node api/server.js",
     "report": "node generate-report.js",
     "cy:run": "npm run test && npm run report",
     "k6:run": "k6 run k6/load-test.js",
@@ -46,6 +47,7 @@
     "webdriverio": "^8.38.2"
   },
   "dependencies": {
+    "express": "^4.19.2",
     "@badeball/cypress-cucumber-preprocessor": "^23.2.1",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.6",
     "choco": "^0.2.1",

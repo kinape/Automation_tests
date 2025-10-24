@@ -28,5 +28,8 @@ module.exports = defineConfig({
       return config;
     },
     specPattern: "cypress/e2e/cucumber/**/*.feature",
+    env: {
+      API_BASE_URL: process.env.API_BASE_URL || 'http://localhost:3000/api',
+    },
   },
 });
