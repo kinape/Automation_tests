@@ -1,25 +1,21 @@
 describe('ApiDemos - Smoke', () => {
     it('deve abrir o app e navegar para Views', async () => {
-        // Tenta localizar "Views"; se não estiver visível, faz scroll até ficar em viewport
-        const viewsSelector = '~Views';
-        let viewsItem = await $(viewsSelector);
+        // Use seletor por texto (UiSelector) para estabilidade no CI
+        const viewsTextSelector = 'android=new UiSelector().text("Views")';
 
-        try {
-            if (!(await viewsItem.isDisplayed())) {
-                await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView("Views")');
-                viewsItem = await $(viewsSelector);
-            }
-        } catch (_) {
-            // Fallback adicional: tenta sempre o UiScrollable
+        // Garante que "Views" esteja visível (faz scroll se necessário)
+        let viewsItem = await $(viewsTextSelector);
+        if (!(await viewsItem.isDisplayed().catch(() => false))) {
             await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView("Views")');
-            viewsItem = await $(viewsSelector);
+            viewsItem = await $(viewsTextSelector);
         }
 
         await viewsItem.waitForDisplayed({ timeout: 90000 });
         await viewsItem.click();
 
         // Verifica que "Buttons" aparece dentro de Views
-        const buttonsItem = await $('~Buttons');
+        const buttonsTextSelector = 'android=new UiSelector().text("Buttons")';
+        const buttonsItem = await $(buttonsTextSelector);
         await buttonsItem.waitForDisplayed({ timeout: 60000 });
         expect(await buttonsItem.isDisplayed()).toBe(true);
     });

@@ -5,7 +5,7 @@
 
 Este projeto abrangente de automação de testes foi desenvolvido para demonstrar a vivência e a proficiência em uma variedade de técnicas e ferramentas de teste, incluindo testes de API, E2E (end-to-end), mobile e integração contínua.
 
-O objetivo é evidenciar a capacidade de estruturar pipelines de CI/CD, aplicar boas práticas de automação, e integrar frameworks modernos como Cypress, Playwright, Appium e WebdriverIO, garantindo cobertura funcional, desempenho e estabilidade das aplicações testadas.
+O objetivo é evidenciar a capacidade de estruturar pipelines de CI/CD, aplicar boas práticas de automação, e integrar frameworks modernos como Cypress, Appium e WebdriverIO, garantindo cobertura funcional, desempenho e estabilidade das aplicações testadas.
 
 Além disso, o projeto contempla a adoção de padrões de projeto (Design Patterns) voltados à automação de testes, o uso de TypeScript/JavaScript como base de desenvolvimento, e a integração com ferramentas de versionamento e entrega contínua, como GitHub CI/CD.
 

@@ -1,23 +1,30 @@
 describe('ApiDemos - Formulário', () => {
     it('deve preencher e enviar o formulário de entrada de texto', async () => {
         // Abre a seção "App"
-        const appItem = await $('~App');
+        const appTextSelector = 'android=new UiSelector().text("App")';
+        let appItem = await $(appTextSelector);
+        if (!(await appItem.isDisplayed().catch(() => false))) {
+            await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView("App")');
+            appItem = await $(appTextSelector);
+        }
         await appItem.waitForDisplayed({ timeout: 60000 });
         await appItem.click();
 
         // Abre "Alert Dialogs"
-        let alertDialogsItem = await $('~Alert Dialogs');
+        const alertDialogsTextSelector = 'android=new UiSelector().text("Alert Dialogs")';
+        let alertDialogsItem = await $(alertDialogsTextSelector);
         if (!(await alertDialogsItem.isDisplayed().catch(() => false))) {
             await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView("Alert Dialogs")');
-            alertDialogsItem = await $('~Alert Dialogs');
+            alertDialogsItem = await $(alertDialogsTextSelector);
         }
         await alertDialogsItem.click();
 
         // Abre o diálogo de entrada de texto (formulário)
-        let textEntryItem = await $('~Text Entry dialog');
+        const textEntryTextSelector = 'android=new UiSelector().text("Text Entry dialog")';
+        let textEntryItem = await $(textEntryTextSelector);
         if (!(await textEntryItem.isDisplayed().catch(() => false))) {
             await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView("Text Entry dialog")');
-            textEntryItem = await $('~Text Entry dialog');
+            textEntryItem = await $(textEntryTextSelector);
         }
         await textEntryItem.click();
 
