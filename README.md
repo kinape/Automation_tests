@@ -9,7 +9,7 @@ O objetivo é evidenciar a capacidade de estruturar pipelines de CI/CD, aplicar 
 
 Além disso, o projeto contempla a adoção de padrões de projeto (Design Patterns) voltados à automação de testes, o uso de TypeScript/JavaScript como base de desenvolvimento, e a integração com ferramentas de versionamento e entrega contínua, como GitHub CI/CD.
 
-- Testes de API (E2E): Utilizando Cypress com Cucumber contra uma API local em Node (substitui `reqres.in`).
+- Testes de API (E2E): Utilizando Cypress com Cucumber contra uma API local em Node.
 - Testes de Carga: Utilizando k6 para simular o comportamento do usuário e avaliar o desempenho da API sob carga.
 - Testes Móveis (E2E): Utilizando WebdriverIO e Appium para automatizar testes em um aplicativo Android nativo.
 

@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  api-e2e-k6-tests-and-report:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -36,7 +36,7 @@ jobs:
       - name: Run Cypress
         env:
           API_BASE_URL: http://localhost:3000/api
-        run: npx cypress run
+        run: npm run cy:run
 
       - name: Setup k6
         uses: grafana/setup-k6-action@v1
@@ -46,11 +46,30 @@ jobs:
           K6_API_BASE_URL: http://localhost:3000
         run: k6 run k6/load-test.js
 
-      - name: Upload Cypress videos and screenshots on failure
+      - name: Upload Cypress reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-reports
+          path: |
+            cypress/reports
+          if-no-files-found: warn
+
+      - name: Upload Cypress videos and screenshots (on failure)
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: cypress-artifacts
+          path: |
+            cypress/videos
+            cypress/screenshots
+          if-no-files-found: warn
+
+      - name: Upload k6 summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-summary
           path: |
             k6/summary.html
             k6/summary.json
