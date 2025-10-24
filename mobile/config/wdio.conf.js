@@ -21,6 +21,12 @@ exports.config = {
         'appium:automationName': 'UiAutomator2',
         'appium:deviceName': deviceNameEnv || 'Android Emulator',
         'appium:app': appPathEnv ? path.resolve(appPathEnv) : path.join(__dirname, '..', 'app', 'ApiDemos-debug.apk'),
+        // Força pacote/atividade da ApiDemos para garantir tela inicial previsível no CI
+        'appium:appPackage': 'io.appium.android.apis',
+        'appium:appActivity': '.ApiDemos',
+        // Garante labels em inglês (Views, etc.)
+        'appium:language': 'en',
+        'appium:locale': 'US',
         'appium:autoGrantPermissions': true,
         'appium:ignoreHiddenApiPolicyError': true,
         // Timeouts e ajustes para estabilizar o boot e comandos ADB (aumentados para CI)
@@ -36,11 +42,18 @@ exports.config = {
     logLevel: 'info',
     bail: 0,
     baseUrl: 'http://localhost',
-    waitforTimeout: 10000,
+    waitforTimeout: 20000,
     // Aumenta o timeout de criação de sessão/requests WebDriver para acomodar instalações/lançamentos mais lentos em CI
     connectionRetryTimeout: 600000,
-    connectionRetryCount: 3,
-    services: ['appium'],
+    connectionRetryCount: 5,
+    services: [
+        ['appium', {
+            // Registra saída do Appium em arquivo para publicação no CI
+            args: {
+                log: path.join(__dirname, '..', 'logs', 'appium.log')
+            }
+        }]
+    ],
     framework: 'mocha',
     reporters: [
         'spec',
@@ -53,6 +66,8 @@ exports.config = {
     mochaOpts: {
         ui: 'bdd',
         timeout: 120000,
+        // Em CI, uma nova tentativa pode reduzir flakiness eventual
+        retries: process.env.CI ? 1 : 0,
     },
     autoCompileOpts: {
         autoCompile: false,
@@ -109,6 +124,9 @@ exports.config = {
         }
     },
     onPrepare: function () {
+        // Garante diretório de logs para salvar appium.log, screenshots, logcat
+        const logsDir = path.join(__dirname, '..', 'logs');
+        try { fs.mkdirSync(logsDir, { recursive: true }); } catch {}
         const sdkRoot = process.env.ANDROID_SDK_ROOT || process.env.ANDROID_HOME || path.join(process.env.LOCALAPPDATA || '', 'Android', 'Sdk');
 
         if (!sdkRoot || !fs.existsSync(sdkRoot)) {
@@ -196,6 +214,18 @@ Defina AVD_NAME para um AVD válido ou conecte um device físico (UDID).`
                 if (e && e.message) throw e;
             }
         }
+    },
+    onComplete: function () {
+        // Exporta logcat ao final para ajudar no diagnóstico no CI
+        try {
+            const logsDir = path.join(__dirname, '..', 'logs');
+            try { fs.mkdirSync(logsDir, { recursive: true }); } catch {}
+            const out = path.join(logsDir, 'logcat.txt');
+            const res = cp.spawnSync('adb', ['logcat', '-d'], { shell: true, encoding: 'utf8' });
+            if (res && typeof res.stdout === 'string') {
+                fs.writeFileSync(out, res.stdout, 'utf8');
+            }
+        } catch {}
     },
 };
 

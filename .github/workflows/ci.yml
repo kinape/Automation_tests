@@ -103,10 +103,28 @@ jobs:
             adb version
           script: npm run test:mobile:ci
 
-      - name: Generate Allure report (mobile)
-        run: npx allure generate --clean mobile/reports/allure-results -o mobile/reports/allure-report
+      - name: Generate Allure HTML (mobile)
+        if: always()
+        run: npm run allure:generate:mobile
 
-      - name: Upload mobile Allure report
+      - name: Upload mobile logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mobile-logs
+          path: |
+            mobile/logs
+          if-no-files-found: warn
+
+      - name: Upload mobile allure results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mobile-allure-results
+          path: mobile/reports/allure-results
+          if-no-files-found: warn
+
+      - name: Upload mobile Allure HTML
         uses: actions/upload-artifact@v4
         if: always()
         with:
