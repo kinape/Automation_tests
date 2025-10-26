@@ -125,12 +125,8 @@ jobs:
             adb kill-server || true
             adb start-server
             adb version
-            # Wait for device to be online
-            for i in {1..30}; do
-              adb devices | grep 'emulator-5554.*device' && break
-              echo "Waiting for emulator to be online..."
-              sleep 5
-            done
+            # Wait for device to be online (single-line, POSIX sh)
+            for i in $(seq 1 30); do adb devices | grep -q 'emulator-5554.*device' && break; echo "Waiting for emulator to be online..."; sleep 5; done
             adb devices
           script: npm run test:mobile:ci
 
