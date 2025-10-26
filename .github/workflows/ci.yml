@@ -131,6 +131,7 @@ jobs:
               echo "Waiting for emulator to be online..."
               sleep 5
             done
+            adb devices
           script: npm run test:mobile:ci
 
       - name: Generate Allure HTML (mobile)
