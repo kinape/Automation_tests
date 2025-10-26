@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "checkJs": false,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["*"]
+    },
+    "types": [
+      "node",
+      "mocha",
+      "cypress",
+      "webdriverio",
+      "@wdio/globals/types"
+    ]
+  },
+  "include": [
+    "api/**/*.js",
+    "cypress/**/*.js",
+    "mobile/**/*.js",
+    "k6/**/*.js",
+    "generate-report.js"
+  ]
+}
+

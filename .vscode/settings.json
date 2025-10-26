@@ -1,0 +1,17 @@
+{
+  "files.encoding": "utf8",
+  "files.eol": "\n",
+  "files.autoGuessEncoding": false,
+  "editor.renderWhitespace": "boundary",
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "javascript.suggest.completeFunctionCalls": true,
+  "typescript.suggest.completeFunctionCalls": true,
+  "javascript.validate.enable": true,
+  "eslint.validate": ["javascript"],
+  "[markdown]": {
+    "editor.wordWrap": "on"
+  }
+}
+

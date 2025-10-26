@@ -1,5 +1,8 @@
 describe('ApiDemos - Smoke', () => {
     it('deve abrir o app e navegar para Views', async () => {
+        const mainTitle = await $('android=new UiSelector().text("API Demos")');
+        await mainTitle.waitForDisplayed({ timeout: 600000 });
+        
         // Use seletor por texto (UiSelector) para estabilidade no CI
         const viewsTextSelector = 'android=new UiSelector().text("Views")';
 

@@ -1,4 +1,4 @@
-﻿# Testes Mobile (WebdriverIO + Appium)
+# Testes Mobile (WebdriverIO + Appium)
 [![Autor: Rogerio Melo Kinape](https://img.shields.io/badge/autor-Rogerio%20Melo%20Kinape-blue)](#autor)
 
 Este diretório contém a suíte E2E mobile usando WebdriverIO 8 com Appium (Android).
@@ -75,3 +75,4 @@ $env:APP_PATH="C:\\apps\\MeuApp.apk"; $env:AVD_NAME="Pixel_6_API_34"; npm run te
 - O `wdio.conf.js` valida se o SDK e `adb` estão acessíveis antes de iniciar.
 - O APK é checado quanto à assinatura ZIP válida para evitar "Invalid file" no Appium.
 - Em CI (GitHub Actions) o emulador é provisionado por `reactivecircus/android-emulator-runner` e o Appium é iniciado pelo serviço do WDIO.
+

@@ -14,7 +14,7 @@ export const options = {
   },
 };
 
-// Função principal que cada usuário virtual (VU) irá executar
+// Função principal que cada usuário virtual (VU) executa
 export default function () {
   const BASE = __ENV.K6_API_BASE_URL || 'http://localhost:3000';
   // Faz uma requisição GET para a API (local/CI)
@@ -34,9 +34,9 @@ export function handleSummary(data) {
   const metrics = data && data.metrics ? data.metrics : {};
 
   function get(obj, keys, def) {
-    var cur = obj;
-    for (var i = 0; i < keys.length; i++) {
-      var k = keys[i];
+    let cur = obj;
+    for (let i = 0; i < keys.length; i++) {
+      const k = keys[i];
       if (cur && k in cur) {
         cur = cur[k];
       } else {
@@ -80,7 +80,7 @@ export function handleSummary(data) {
       <div class="card"><div>Taxa de Sucesso</div><div class="kpi">${passRate.toFixed(2)}%</div></div>
       <div class="card"><div>Latência média</div><div class="kpi">${httpAvg.toFixed(2)} ms</div></div>
       <div class="card"><div>Latência p95</div><div class="kpi">${httpP95.toFixed(2)} ms</div></div>
-      <div class="card"><div>Checks</div><div class="kpi">${checksPasses} ✓ / ${checksFails} ✗</div></div>
+      <div class="card"><div>Checks</div><div class="kpi">${checksPasses} ✔ / ${checksFails} ✖</div></div>
     </div>
 
     <table>

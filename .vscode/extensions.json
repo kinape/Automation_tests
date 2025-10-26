@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "ms-vscode.powershell",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "cypress.cypress",
+    "wdio.vscode-wdio",
+    "bierner.markdown-preview-github-styles"
+  ]
+}
+

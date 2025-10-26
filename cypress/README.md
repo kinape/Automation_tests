@@ -1,15 +1,15 @@
-﻿# Projeto de Automação de Testes com Cypress e Cucumber
+# Projeto de Automação de Testes com Cypress e Cucumber
 [![Autor: Rogerio Melo Kinape](https://img.shields.io/badge/autor-Rogerio%20Melo%20Kinape-blue)](#autor)
 
 Este projeto contém testes automatizados para uma API e uma aplicação web, utilizando Cypress e Cucumber.
 
 ## Estrutura do Projeto
 
-- `cypress/e2e/cucumber`: Arquivos `.feature` com as especificações dos testes em Gherkin.
-- `cypress/e2e/cucumber/stepDefinitions`: Implementação dos passos dos testes.
-- `cypress/reports`: Relatórios dos testes.
-- `cypress/screenshots`: Capturas de tela dos testes que falharam.
-- `cypress/support`: Comandos customizados e configurações do Cypress.
+- `cypress/e2e/cucumber`: arquivos `.feature` com as especificações dos testes em Gherkin.
+- `cypress/e2e/cucumber/stepDefinitions`: implementação dos passos dos testes.
+- `cypress/reports`: relatórios dos testes.
+- `cypress/screenshots`: capturas de tela dos testes que falharam.
+- `cypress/support`: comandos customizados e configurações do Cypress.
 
 ## Funcionalidades Testadas
 
@@ -63,3 +63,4 @@ npm run report
 ```
 
 O relatório será gerado em `cypress/reports/html/index.html`.
+

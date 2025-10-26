@@ -25,3 +25,4 @@ report.generate({
     ],
   },
 });
+

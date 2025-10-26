@@ -40,19 +40,15 @@
     "@wdio/appium-service": "^8.38.2",
     "appium": "^2.10.3",
     "appium-uiautomator2-driver": "^3.5.3",
-    "appium-xcuitest-driver": "^7.14.0",
     "cypress": "^15.5.0",
     "esbuild-plugins-node-modules-polyfill": "^1.7.1",
     "multiple-cucumber-html-reporter": "^3.9.3",
-    "webdriverio": "^8.38.2"
-  },
-  "dependencies": {
-    "express": "^4.19.2",
+    "webdriverio": "^8.38.2",
     "@badeball/cypress-cucumber-preprocessor": "^23.2.1",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.6",
-    "choco": "^0.2.1",
-    "crypto-browserify": "^3.12.1"
+    "express": "^4.19.2"
   },
+  "dependencies": {},
   "overrides": {
     "@cucumber/messages": "^30.1.0"
   }
