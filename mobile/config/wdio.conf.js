@@ -68,7 +68,7 @@ exports.config = {
     ],
     mochaOpts: {
         ui: 'bdd',
-        timeout: 120000,
+        timeout: 180000,
         // Em CI, uma nova tentativa pode reduzir flakiness eventual
         retries: process.env.CI ? 1 : 0,
     },
@@ -113,6 +113,23 @@ exports.config = {
             const anim = (bootAnim.stdout || '').trim().toLowerCase();
             return (sysBoot === '1' || devBoot === '1') && (anim === 'stopped' || anim === '');
         }
+
+        // Se o dispositivo estiver "offline", reinicia o servidor ADB
+        try {
+            const list = cp.spawnSync('adb', ['devices'], { shell: true, encoding: 'utf8' });
+            const out = (list.stdout || '').toLowerCase();
+            if (out.includes('offline')) {
+                try { cp.spawnSync('adb', ['kill-server'], { shell: true, encoding: 'utf8' }); } catch {}
+                Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 1000);
+                try { cp.spawnSync('adb', ['start-server'], { shell: true, encoding: 'utf8' }); } catch {}
+                Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 2000);
+            }
+        } catch {}
+
+        // Aguarda o dispositivo aparecer no ADB, com timeout para evitar travas
+        try {
+            cp.spawnSync('adb', [...adbArgsBase, 'wait-for-device'], { shell: true, encoding: 'utf8', timeout: 120000 });
+        } catch {}
 
         while (Date.now() - start < maxWaitMs) {
             try {
