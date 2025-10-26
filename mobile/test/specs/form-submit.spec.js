@@ -1,7 +1,7 @@
 describe('ApiDemos - Formulário', () => {
     it('deve preencher e enviar o formulário de entrada de texto', async () => {
         const mainTitle = await $('android=new UiSelector().text("API Demos")');
-        await mainTitle.waitForDisplayed({ timeout: 600000 });
+        await mainTitle.waitForDisplayed({ timeout: 300000 });
 
         // Abre a seção "App"
         const appTextSelector = 'android=new UiSelector().text("App")';

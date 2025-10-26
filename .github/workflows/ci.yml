@@ -116,7 +116,7 @@ jobs:
           target: google_apis
           profile: pixel_6
           emulator-options: -no-window -no-snapshot -noaudio -no-boot-anim -gpu swiftshader_indirect -camera-back none -camera-front none
-          emulator-boot-timeout: 900
+          emulator-boot-timeout: 2700
           disable-animations: true
           disable-linux-hw-accel: true
           pre-emulator-launch-script: |
@@ -125,6 +125,12 @@ jobs:
             adb kill-server || true
             adb start-server
             adb version
+            # Wait for device to be online
+            for i in {1..30}; do
+              adb devices | grep 'emulator-5554.*device' && break
+              echo "Waiting for emulator to be online..."
+              sleep 5
+            done
           script: npm run test:mobile:ci
 
       - name: Generate Allure HTML (mobile)
