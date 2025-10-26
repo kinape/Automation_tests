@@ -85,6 +85,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20.19.0'
+          cache: 'npm'
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -101,7 +102,7 @@ jobs:
           key: ${{ runner.os }}-android-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Download Android App
         run: |
@@ -115,7 +116,7 @@ jobs:
           arch: x86_64
           target: google_apis
           profile: pixel_6
-          emulator-options: -no-window -no-snapshot -noaudio -no-boot-anim -gpu swiftshader_indirect -camera-back none -camera-front none
+          emulator-options: -no-window -no-snapshot -no-audio -no-boot-anim -gpu swiftshader_indirect -camera-back none -camera-front none
           emulator-boot-timeout: 2700
           disable-animations: true
           disable-linux-hw-accel: true
@@ -130,14 +131,8 @@ jobs:
             chmod +x mobile/scripts/wait-for-emulator.sh
             # Aguarda emulador ficar totalmente pronto (até 15 minutos)
             mobile/scripts/wait-for-emulator.sh 900
-            # Se ainda aparecer como 'offline', reinicia ADB
-            if adb devices | grep -q 'offline'; then
-              echo "Device is offline, restarting ADB"
-              adb kill-server || true
-              adb start-server
-              sleep 5
-              adb devices
-            fi
+            # Se ainda aparecer como 'offline', reinicia ADB (one-liner)
+            if adb devices | grep -q 'offline'; then echo "Device is offline, restarting ADB"; adb kill-server || true; adb start-server; sleep 5; adb devices; fi
             npm run test:mobile:ci
 
       - name: Generate Allure HTML (mobile)
