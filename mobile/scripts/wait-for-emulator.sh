@@ -12,7 +12,7 @@ export PATH="$PATH:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator"
 start_time=$(date +%s)
 
 echo "Waiting for ADB device..."
-adb wait-for-device || true
+adb -e wait-for-device || adb wait-for-device || true
 
 while true; do
   # If device shows as offline, restart ADB to recover
@@ -24,9 +24,10 @@ while true; do
     sleep 5
   fi
 
-  boot_completed=$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r' || true)
-  dev_boot=$(adb shell getprop dev.bootcomplete 2>/dev/null | tr -d '\r' || true)
-  boot_anim=$(adb shell getprop init.svc.bootanim 2>/dev/null | tr -d '\r' | tr '[:upper:]' '[:lower:]' || true)
+  # Target explicitly the emulator instance (-e)
+  boot_completed=$(adb -e shell getprop sys.boot_completed 2>/dev/null | tr -d '\r' || true)
+  dev_boot=$(adb -e shell getprop dev.bootcomplete 2>/dev/null | tr -d '\r' || true)
+  boot_anim=$(adb -e shell getprop init.svc.bootanim 2>/dev/null | tr -d '\r' | tr '[:upper:]' '[:lower:]' || true)
 
   if { [ "$boot_completed" = "1" ] || [ "$dev_boot" = "1" ]; } \
      && { [ "$boot_anim" = "stopped" ] || [ -z "${boot_anim}" ]; }; then
@@ -44,4 +45,3 @@ while true; do
   echo "Waiting for emulator to start... (boot_completed=$boot_completed, anim=$boot_anim)"
   sleep 5
 done
-

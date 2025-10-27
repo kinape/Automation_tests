@@ -7,7 +7,7 @@ const avdName = process.env.AVD_NAME || process.env.ANDROID_AVD;
 const udid = process.env.UDID;
 const deviceNameEnv = process.env.DEVICE_NAME;
 const appPathEnv = process.env.APP_PATH;
-const avdArgsCI = process.env.CI ? '-no-window -no-snapshot -no-boot-anim -gpu swiftshader_indirect -noaudio -camera-back none -camera-front none' : undefined;
+const avdArgsCI = process.env.CI ? '-no-window -no-snapshot -no-boot-anim -gpu swiftshader_indirect -no-audio -camera-back none -camera-front none' : undefined;
 
 exports.config = {
     runner: 'local',
