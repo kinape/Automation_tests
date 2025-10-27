@@ -115,7 +115,12 @@ jobs:
           api-level: 33
           arch: x86_64
           target: google_apis
-          profile: pixel_3a
+          profile: pixel_6
+          avd-name: test
+          force-avd-creation: true
+          cores: 4
+          ram-size: 4096
+          disk-size: 10G
           emulator-options: -no-window -no-snapshot -no-audio -no-boot-anim -gpu swiftshader_indirect -camera-back none -camera-front none
           emulator-boot-timeout: 2700
           disable-animations: true
