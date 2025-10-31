@@ -76,7 +76,7 @@ jobs:
           if-no-files-found: warn
 
   appium-mobile-test:
-    runs-on: ubuntu-latest
+    runs-on: macos-13
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -121,10 +121,9 @@ jobs:
           cores: 4
           ram-size: 4096
           disk-size: 10G
-          emulator-options: -no-window -no-snapshot -no-audio -no-boot-anim -gpu swiftshader_indirect -camera-back none -camera-front none
+          emulator-options: -no-window -no-snapshot -no-audio -no-boot-anim -gpu host -camera-back none -camera-front none
           emulator-boot-timeout: 2700
           disable-animations: true
-          disable-linux-hw-accel: true
           pre-emulator-launch-script: |
             echo "Resetting adb server using action SDK"
             which adb || true
