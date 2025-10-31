@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Wait for Android emulator to be fully booted and online.
-# Optional arg1: timeout in seconds (default 300)
+# Espera o emulador Android bootar e estar online.
+# Opcional arg1: timeout em segundos (padrão 300)
 
 TIMEOUT_SECONDS="${1:-300}"
 
@@ -15,7 +15,7 @@ echo "Waiting for ADB device..."
 adb -e wait-for-device || adb wait-for-device || true
 
 while true; do
-  # If device shows as offline, restart ADB to recover
+  # Se o dispositivo estiver offline, reiniciar o ADB
   if adb devices | grep -q 'offline'; then
     echo "Device is offline, restarting ADB server"
     adb kill-server || true
@@ -24,7 +24,7 @@ while true; do
     sleep 5
   fi
 
-  # Target explicitly the emulator instance (-e)
+  # Direcionar explicitamente a instância do emulador (-e)
   boot_completed=$(adb -e shell getprop sys.boot_completed 2>/dev/null | tr -d '\r' || true)
   dev_boot=$(adb -e shell getprop dev.bootcomplete 2>/dev/null | tr -d '\r' || true)
   boot_anim=$(adb -e shell getprop init.svc.bootanim 2>/dev/null | tr -d '\r' | tr '[:upper:]' '[:lower:]' || true)

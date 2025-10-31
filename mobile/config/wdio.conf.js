@@ -68,7 +68,7 @@ exports.config = {
     ],
     mochaOpts: {
         ui: 'bdd',
-        timeout: 180000,
+        timeout: 600000,
         // Em CI, uma nova tentativa pode reduzir flakiness eventual
         retries: process.env.CI ? 1 : 0,
     },
@@ -93,7 +93,7 @@ exports.config = {
     },
     // Aguarda o Android estar completamente pronto antes de iniciar os testes
     before: function () {
-        const maxWaitMs = 5 * 60 * 1000; // 5 minutos
+        const maxWaitMs = 10 * 60 * 1000; // 10 minutos
         const start = Date.now();
 
         const adbArgsBase = [];
@@ -142,7 +142,7 @@ exports.config = {
                     return;
                 }
             } catch {}
-            // Dorme 2s antes de tentar novamente
+            // Aguarda 2s antes de tentar novamente
             Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 2000);
         }
 
