@@ -1,32 +1,46 @@
-# Dependências
+#+ Dependências
 /node_modules
 
-# Cypress
+#+ Cypress
 /cypress/downloads
 /cypress/reports
 /cypress/screenshots
 /cypress/videos
 
-# Logs
-npm-debug.log
-*.log
+#+ Playwright
+/playwright-report/
+/test-results/
 
-# Arquivos do Sistema Operacional
-.DS_Store
-Thumbs.db
-
-Automation_tests.code-workspace 
-mobile/app/ApiDemos-debug.apk 
-
-# Relatórios k6
+#+ k6 reports
 k6/summary.html
 k6/summary.json
 
-# Relatórios Allure (mobile / WebdriverIO)
+#+ Allure (mobile / WebdriverIO)
 mobile/reports/
 mobile/reports/allure-results/
 mobile/reports/allure-report/
 
-# Variáveis de ambiente locais
+#+ Logs
+npm-debug.log
+*.log
+mobile/logs/
+/api.log
+/api.pid
+
+#+ SO / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.iml
+Automation_tests.code-workspace
+
+#+ Android APK local
+mobile/app/ApiDemos-debug.apk
+
+#+ Variáveis de ambiente locais
 .env
 .env.*
+
+#+ Cobertura
+coverage/

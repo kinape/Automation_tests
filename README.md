@@ -3,112 +3,125 @@
 
 ## Descrição
 
-Este projeto abrangente de automação de testes foi desenvolvido para demonstrar vivência e proficiência em diversas técnicas e ferramentas de teste, incluindo testes de API, E2E (end-to-end), mobile e integração contínua.
+Este projeto abrangente de automação de testes demonstra vivência e proficiência em diferentes técnicas e ferramentas: testes de API, E2E web e mobile, testes de carga e integração contínua (CI).
 
-O objetivo é evidenciar a capacidade de estruturar pipelines de CI/CD, aplicar boas práticas de automação e integrar frameworks modernos como Cypress, Appium e WebdriverIO, garantindo cobertura funcional, desempenho e estabilidade das aplicações testadas.
+Os objetivos incluem estruturar pipelines de CI/CD, aplicar boas práticas de automação e integrar frameworks modernos como Cypress, Appium/WebdriverIO, Playwright e k6, garantindo cobertura funcional, desempenho e estabilidade.
 
-Além disso, o projeto contempla a adoção de padrões de projeto (Design Patterns) voltados à automação de testes, o uso de TypeScript/JavaScript como base de desenvolvimento e a integração com ferramentas de versionamento e entrega contínua, como GitHub CI/CD.
+- Testes de API (E2E): Cypress com Cucumber contra uma API local em Node.
+- Testes de Carga: k6 para simular uso e avaliar desempenho.
+- Testes Mobile (E2E): WebdriverIO + Appium em aplicativo Android nativo.
+- Testes Web (emulação mobile): Playwright emulando Pixel 5.
 
-- Testes de API (E2E): utilizando Cypress com Cucumber contra uma API local em Node.
-- Testes de Carga: utilizando k6 para simular o comportamento do usuário e avaliar o desempenho da API sob carga.
-- Testes Móveis (E2E): utilizando WebdriverIO e Appium para automatizar testes em um aplicativo Android nativo.
-
-O projeto foi estruturado para ser modular, escalável e fácil de manter.
+O projeto é modular, escalável e de fácil manutenção.
 
 ## Arquitetura e Estrutura de Pastas
 
-- `cypress/`: contém todos os artefatos relacionados aos testes de API com Cypress.
-  - `e2e/cucumber/`: arquivos de especificação `.feature` do Cucumber.
-  - `e2e/cucumber/stepDefinitions/`: implementação dos steps dos cenários `.feature`.
-  - `support/api/`: abstração das chamadas à API, atuando como uma camada de serviço.
-  - `reports/`: relatórios de teste gerados em formatos JSON e HTML.
-- `k6/`: contém o script de teste de carga.
-  - `load-test.js`: define os cenários de teste de carga, incluindo rampas de usuários e validações de desempenho.
-- `mobile/`: contém a configuração e os testes para a automação móvel.
-  - `app/`: onde o arquivo `.apk` do aplicativo a ser testado deve ser colocado.
-  - `config/`: arquivo de configuração do WebdriverIO (`wdio.conf.js`).
-  - `test/`: contém os `pageobjects` e as `specs` (casos de teste) para os testes móveis.
-- `generate-report.js`: script para gerar o relatório HTML dos testes do Cypress.
+- `cypress/`: artefatos dos testes de API com Cypress.
+  - `e2e/cucumber/`: arquivos `.feature` do Cucumber.
+  - `e2e/cucumber/stepDefinitions/`: implementação dos steps.
+  - `support/api/`: abstração das chamadas à API.
+  - `reports/`: relatórios de teste.
+- `k6/`: script de teste de carga (`load-test.js`).
+- `mobile/`: configuração e testes da automação mobile.
+  - `app/`: onde colocar o `.apk` sob teste.
+  - `config/`: configuração do WebdriverIO (`wdio.conf.js`).
+  - `test/`: page objects e specs.
+- `playwright/`: suíte web com Playwright (emulação móvel - Pixel 5).
+  - `playwright.config.js`: configuração.
+  - `tests/`: casos de teste.
+  - `playwright-report/`: relatório HTML.
+- `generate-report.js`: gera relatório HTML do Cypress.
 
 ## Pré-requisitos
 
-Antes de começar, certifique-se de ter as seguintes ferramentas instaladas:
-
 - Node.js (v20 ou superior)
-- k6: Guia de Instalação - https://grafana.com/docs/k6/latest/set-up/
-- Android Studio e SDK: para os testes móveis, é necessário ter o Android Studio instalado e o SDK do Android configurado corretamente.
+- k6 (para testes de carga): https://grafana.com/docs/k6/latest/set-up/
+- Android Studio e SDK (para testes mobile): configurar `ANDROID_HOME`/`ANDROID_SDK_ROOT` e ferramentas no PATH.
 
 ## Instalação
 
-Para instalar todas as dependências do projeto, execute o seguinte comando na raiz do projeto:
+Na raiz do projeto:
 
 ```bash
-npm install
+npm ci
 ```
 
 ## Como Executar os Testes
 
-O projeto está configurado com scripts para facilitar a execução dos diferentes tipos de testes.
-
 ### API Local (Node)
 
-Inicie a API local (usada pelos testes do Cypress e k6):
+Inicie a API local (usada por Cypress e k6):
 
 ```bash
 npm run api:start
 ```
 
-Por padrão, a API escuta em `http://localhost:3000`.
+Padrão: `http://localhost:3000`.
 
 ### Testes de API (Cypress)
 
-Com a API em execução, rode os cenários `.feature` e gere o relatório:
+Com a API rodando:
 
 ```bash
 npm run cy:run
 ```
 
-Opcional: a base da API pode ser alterada com `API_BASE_URL` (ex.: `http://host:porta/api`).
-
-Relatórios são gerados em `cypress/reports/`.
+Opcional: altere a base via `API_BASE_URL` (ex.: `http://host:porta/api`). Relatórios em `cypress/reports/`.
 
 ### Testes de Carga (k6)
-
-Com a API em execução, rode o teste de carga definido no arquivo `k6/load-test.js`:
 
 ```bash
 npm run k6:run
 ```
 
-Ou diretamente apontando um host customizado:
+Ou diretamente com host customizado:
 
 ```bash
 K6_API_BASE_URL=http://localhost:3000 k6 run k6/load-test.js
 ```
 
-### Testes Móveis (WebdriverIO)
+### Testes Mobile (WebdriverIO + Appium)
 
-Para executar os testes móveis, siga os passos abaixo:
+1) Inicie um emulador Android (exemplo):
 
-1. Inicie o Emulador Android:
-   ```bash
-   npm run android:emu:start
-   ```
-   Nota: o nome do emulador (AVD) pode ser customizado no `package.json`.
+```bash
+npm run android:emu:start
+```
 
-2. Execute os testes móveis:
-   ```bash
-   npm run test:mobile
-   ```
-   Este comando é específico para o ambiente Windows e configura as variáveis de ambiente necessárias.
+2) Execute os testes (Windows ajusta variáveis de ambiente):
+
+```bash
+npm run test:mobile
+```
+
+3) Alternativa com AVD headless (Windows):
+
+```bash
+npm run test:mobile:with-avd
+```
+
+### Testes Web (Playwright)
+
+1) Instalar navegadores do Playwright (uma vez):
+
+```bash
+npx playwright install
+```
+
+2) Executar testes e abrir relatório:
+
+```bash
+npm run test:pw
+npm run pw:report
+```
 
 ## CI (GitHub Actions)
 
-O workflow `.github/workflows/ci.yml`:
+Workflow `.github/workflows/ci.yml`:
 - Faz checkout e instala dependências
-- Sobe a API local (espera `GET /health`)
-- Executa Cypress (`API_BASE_URL` apontando para a API local)
-- Instala k6 e executa o teste de carga (`K6_API_BASE_URL`)
-
-- Executa testes mobile (job appium-mobile-test) e publica Allure como artifact
+- Sobe API local e aguarda `GET /health`
+- Executa Cypress (com `API_BASE_URL`)
+- Instala k6 e executa teste de carga (`K6_API_BASE_URL`)
+- Executa testes mobile (job `appium-mobile-test`) e publica Allure como artefato
+- Executa Playwright (job `playwright-mobile-suite`) e publica `playwright-report` como artefato
 

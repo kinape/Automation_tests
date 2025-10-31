@@ -1,38 +1,30 @@
 # Projeto de Automação de Testes com Cypress e Cucumber
 [![Autor: Rogerio Melo Kinape](https://img.shields.io/badge/autor-Rogerio%20Melo%20Kinape-blue)](#autor)
 
-Este projeto contém testes automatizados para uma API e uma aplicação web, utilizando Cypress e Cucumber.
+Este projeto contém testes automatizados para API e web usando Cypress e Cucumber.
 
 ## Estrutura do Projeto
 
-- `cypress/e2e/cucumber`: arquivos `.feature` com as especificações dos testes em Gherkin.
-- `cypress/e2e/cucumber/stepDefinitions`: implementação dos passos dos testes.
+- `cypress/e2e/cucumber`: arquivos `.feature` (Gherkin).
+- `cypress/e2e/cucumber/stepDefinitions`: implementação dos passos.
 - `cypress/reports`: relatórios dos testes.
-- `cypress/screenshots`: capturas de tela dos testes que falharam.
-- `cypress/support`: comandos customizados e configurações do Cypress.
+- `cypress/screenshots`: capturas de tela em falhas.
+- `cypress/support`: comandos customizados e configurações.
 
 ## Funcionalidades Testadas
 
-- API: `task1.feature` e `task2.feature` testam endpoints da API local.
-- Aplicação Web: `task3.feature` e `task4.feature` para cadastro, login e checkout simples.
-
-## Bibliotecas Utilizadas
-
-- Cypress
-- Cucumber
-- @faker-js/faker
+- API: `task1.feature` e `task2.feature` contra a API local.
+- Web: `task3.feature` e `task4.feature` (cadastro, login e checkout simples).
 
 ## API Local (Node)
 
-Os testes de API usam uma API local em Node.
-
-- Inicie a API:
+Inicie a API:
 
 ```bash
 npm run api:start
 ```
 
-- Base padrão: `http://localhost:3000/api`. Para mudar, use `API_BASE_URL`.
+Base padrão: `http://localhost:3000/api`. Para mudar, use `API_BASE_URL`.
 
 Exemplo:
 
@@ -42,10 +34,10 @@ API_BASE_URL=http://localhost:3000/api npm run test
 
 ## Como Executar os Testes
 
-1. Instale as dependências na raiz do projeto:
+1. Instale as dependências na raiz:
 
 ```bash
-npm install
+npm ci
 ```
 
 2. Execute os testes:
@@ -54,13 +46,13 @@ npm install
 npm run test
 ```
 
-## Como Gerar o Relatório
+## Relatório
 
-Para gerar o relatório do Cucumber, execute:
+Para gerar o relatório do Cucumber:
 
 ```bash
 npm run report
 ```
 
-O relatório será gerado em `cypress/reports/html/index.html`.
+O HTML ficará em `cypress/reports/html/index.html`.
 

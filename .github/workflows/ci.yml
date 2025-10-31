@@ -134,7 +134,7 @@ jobs:
           script: |
             set -e
             chmod +x mobile/scripts/wait-for-emulator.sh
-            # Aguarda emulador ficar totalmente pronto (até 15 minutos)
+            # Aguarda emulador ficar totalmente pronto (até 20 minutos)
             mobile/scripts/wait-for-emulator.sh 1200
             # Se ainda aparecer como 'offline', reinicia ADB (one-liner)
             if adb devices | grep -q 'offline'; then echo "Device is offline, restarting ADB"; adb kill-server || true; adb start-server; sleep 5; adb devices; fi
@@ -167,4 +167,33 @@ jobs:
         with:
           name: mobile-allure-report
           path: mobile/reports/allure-report
+          if-no-files-found: warn
+
+  playwright-mobile-suite:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests (mobile emulation)
+        run: npm run test:pw:ci
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report
           if-no-files-found: warn

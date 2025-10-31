@@ -137,7 +137,7 @@ exports.config = {
                 const getState = cp.spawnSync('adb', [...adbArgsBase, 'get-state'], { shell: true, encoding: 'utf8' });
                 const stateOk = (getState.stdout || '').toLowerCase().includes('device');
                 if (stateOk && isBootCompleted()) {
-                    // Margem de segurança breve após boot
+                    // Margem de segurança breve após o boot
                     Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 3000);
                     return;
                 }
@@ -240,7 +240,7 @@ exports.config = {
                     const list = emu.stdout.split(/\r?\n/).filter(Boolean);
                     if (!list.includes(avdName)) {
                         throw new Error(
-                            `AVD '${avdName}' não encontrado. Disponíveis: ${list.join(', ') || '(nenhum)'}.
+                            `AVD '${avdName}' não encontrado. Disponíveis: ${list.join(', ') || '(nenhum)' }.
 Defina AVD_NAME para um AVD válido ou conecte um device físico (UDID).`
                         );
                     }
@@ -274,3 +274,4 @@ if (avdName) {
 if (udid) {
     exports.config.capabilities[0]['appium:udid'] = udid;
 }
+

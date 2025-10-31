@@ -3,7 +3,7 @@ class LoginPage {
 
     get inputUsername () {
         // Seletor para o campo de usuário. Use o Appium Inspector para encontrar o seletor correto.
-        // Exemplo: return $('~username'); // Acessibility ID
+        // Exemplo: return $('~username'); // Accessibility ID
         // Exemplo: return $('//android.widget.EditText[@content-desc="username"]'); // XPath
         return $('~username');
     }
@@ -26,3 +26,4 @@ class LoginPage {
 }
 
 module.exports = new LoginPage();
+

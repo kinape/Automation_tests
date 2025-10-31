@@ -23,7 +23,7 @@ Este diretório contém a suíte E2E mobile usando WebdriverIO 8 com Appium (And
 - Instale dependências na raiz do projeto:
 
 ```bash
-npm install
+npm ci
 ```
 
 - Inicie um emulador Android em modo headless e execute os testes:

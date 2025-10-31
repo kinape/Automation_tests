@@ -16,7 +16,10 @@
     "android:emu:start:headless": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\mobile\\scripts\\start-avd.ps1 -AvdName Pixel_6_API_34 -GpuMode swiftshader_indirect -NoWindow",
     "test:mobile:with-avd": "npm run android:emu:start:headless && set \"AVD_NAME=Pixel_6_API_34\" && npm run test:mobile:win",
     "allure:generate:mobile": "npx allure generate --clean mobile/reports/allure-results -o mobile/reports/allure-report",
-    "allure:open:mobile": "npx allure open mobile/reports/allure-report"
+    "allure:open:mobile": "npx allure open mobile/reports/allure-report",
+    "test:pw": "playwright test -c playwright/playwright.config.js",
+    "test:pw:ci": "playwright test -c playwright/playwright.config.js --reporter=list,html",
+    "pw:report": "playwright show-report playwright-report"
   },
   "repository": {
     "type": "git",
@@ -46,7 +49,8 @@
     "webdriverio": "^8.38.2",
     "@badeball/cypress-cucumber-preprocessor": "^23.2.1",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.6",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "@playwright/test": "^1.48.2"
   },
   "dependencies": {},
   "overrides": {
